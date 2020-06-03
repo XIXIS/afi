@@ -1,0 +1,69 @@
+### Billable Hours gitignores ###
+billablehours/HELP.md
+billablehours/.gradle
+billablehours/build/
+billablehours/!gradle/wrapper/gradle-wrapper.jar
+billablehours/!**/src/main/**
+billablehours/!**/src/test/**
+
+### STS ###
+billablehours/.apt_generated
+billablehours/.classpath
+billablehours/.factorypath
+billablehours/.project
+billablehours/.settings
+billablehours/.springBeans
+billablehours/.sts4-cache
+
+### IntelliJ IDEA ###
+billablehours/.idea
+billablehours/*.iws
+billablehours/*.iml
+billablehours/*.ipr
+billablehours/out/
+
+### NetBeans ###
+billablehours/nbproject/private/
+billablehours/nbbuild/
+billablehours/dist/
+billablehours/nbdist/
+billablehours/.nb-gradle/
+
+### VS Code ###
+billablehours/.vscode/
+
+
+
+### Rewarder gitignores ###
+rewarder/HELP.md
+rewarder/.gradle
+rewarder/build/
+rewarder/!gradle/wrapper/gradle-wrapper.jar
+rewarder/!**/src/main/**
+rewarder/!**/src/test/**
+
+### STS ###
+rewarder/.apt_generated
+rewarder/.classpath
+rewarder/.factorypath
+rewarder/.project
+rewarder/.settings
+rewarder/.springBeans
+rewarder/.sts4-cache
+
+### IntelliJ IDEA ###
+rewarder/.idea
+rewarder/*.iws
+rewarder/*.iml
+rewarder/*.ipr
+rewarder/out/
+
+### NetBeans ###
+rewarder/nbproject/private/
+rewarder/nbbuild/
+rewarder/dist/
+rewarder/nbdist/
+rewarder/.nb-gradle/
+
+### VS Code ###
+rewarder/.vscode/
