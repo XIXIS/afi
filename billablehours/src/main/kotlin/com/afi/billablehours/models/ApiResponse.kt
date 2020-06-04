@@ -15,6 +15,9 @@ data class APIResponse<U>(var error: String?, var message: String?, var data: U?
         this.data = data
     }
 
+    constructor(message: String): this("", message, null, "") {
+        this.message = message
+    }
     constructor(data: U, token: String, message: String) : this("", message, data, token) {
         this.message = message
         this.data = data

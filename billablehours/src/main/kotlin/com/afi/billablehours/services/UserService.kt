@@ -8,12 +8,14 @@ import com.afi.billablehours.repositories.UserRepository
 import com.afi.billablehours.repositories.UserTypeRepository
 import com.afi.billablehours.utils.Constants.Companion.ADMIN_USER_TYPE_NAME
 import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_USER_TYPE
-import com.afi.billablehours.utils.Constants.Companion.ERROR_PHONE_EMAIL_MAY_EXIST
+import com.afi.billablehours.utils.Constants.Companion.ERROR_DUPLICATE_NON_EXISTENT
 import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_CREATION
 import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_TYPE_NOT_FOUND
+import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_UPDATE
 import com.afi.billablehours.utils.Constants.Companion.FINANCE_USER_TYPE_NAME
 import com.afi.billablehours.utils.Constants.Companion.LAWYER_USER_TYPE_NAME
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_USER_CREATED
+import com.afi.billablehours.utils.Constants.Companion.SUCCESS_USER_DETAIL_UPDATED
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service
 import java.io.Serializable
 import java.util.*
 import javax.transaction.Transactional
+import kotlin.collections.ArrayList
 
 @Service
 class UserService(private val userRepository: UserRepository, private val userTypeRepository: UserTypeRepository) : UserDetailsService, Serializable {
@@ -66,44 +69,53 @@ class UserService(private val userRepository: UserRepository, private val userTy
         user.password = BCryptPasswordEncoder().encode("password")
 
         // save user
-        try {
+        return try {
             val savedUser: User = save(user)
             println("User successfully created--------")
-            return ResponseEntity<Any?>(
+            ResponseEntity<Any?>(
                     APIResponse(savedUser, SUCCESS_USER_CREATED),
                     HttpStatus.OK
             )
         } catch (e: Exception) {
             println(e.message)
-            return ResponseEntity<Any?>(
-                    APIResponse<String>(ERROR_PHONE_EMAIL_MAY_EXIST, ERROR_USER_CREATION),
+            ResponseEntity<Any?>(
+                    APIResponse<String>(e.message!!, ERROR_USER_CREATION),
                     HttpStatus.UNPROCESSABLE_ENTITY
             )
         }
     }
 
-//    fun update(user: EditUserRequest, existingUser: User): ResponseEntity<*> {
-//        val prevName: String = existingUser.getFullName()
-//        val prev: String = activityLogService.convertObjectToJson(LogDetail(existingUser))
-//        existingUser.setFirstName(user.getFirstName())
-//        existingUser.setLastName(user.getLastName())
-//        existingUser.setPhone(user.getPhone())
-//        existingUser.setEmail(user.getEmail())
-//
-//        // save user
-//        try {
-//            val savedUser: User = save(existingUser)
-//            return ResponseEntity<Any?>(
-//                    APIResponse(savedUser, "User details successfully updated"),
-//                    HttpStatus.OK
-//            )
-//        } catch (e: Exception) {
-//            return ResponseEntity<Any?>(
-//                    APIResponse<>("Non unique phone or email", "Phone or email may already exist"),
-//                    HttpStatus.UNPROCESSABLE_ENTITY
-//            )
-//        }
-//    }
+    fun update(user: CreateUserRequest, existingUser: User): ResponseEntity<*> {
+
+        existingUser.firstName = user.firstName
+        existingUser.lastName = user.lastName
+        existingUser.phone = user.phone
+        existingUser.email = user.email
+
+        if(existingUser.userType?.id != user.userTypeId) {
+            val userType: Optional<UserType?> = userTypeRepository.findById(user.userTypeId)
+            if (!userType.isPresent)
+                return ResponseEntity<Any?>(
+                        APIResponse<String>(ERROR_USER_TYPE_NOT_FOUND(user.userTypeId), ERROR_INVALID_USER_TYPE),
+                        HttpStatus.UNPROCESSABLE_ENTITY
+                )
+            existingUser.userType = userType.get()
+        }
+
+        // save user
+        return try {
+            val savedUser: User = save(existingUser)
+            ResponseEntity<Any?>(
+                    APIResponse(savedUser, SUCCESS_USER_DETAIL_UPDATED),
+                    HttpStatus.OK
+            )
+        } catch (e: Exception) {
+            ResponseEntity<Any?>(
+                    APIResponse<String>(e.message!!, ERROR_USER_UPDATE),
+                    HttpStatus.UNPROCESSABLE_ENTITY
+            )
+        }
+    }
 
     fun save(user: User): User {
         return userRepository.save(user)
@@ -113,13 +125,24 @@ class UserService(private val userRepository: UserRepository, private val userTy
         get() = (SecurityContextHolder.getContext().authentication.principal as User)
                 .email?.let { userRepository.findByEmail(it).get() }
 
-    fun listAll(pageable: Pageable?): Page<User> {
-        val users: Page<User>
+    fun listAll(pageable: Pageable): Page<User?> {
+        val users: Page<User?>
         val user: User? = authUser
-        when (user?.userType?.name) {
-            ADMIN_USER_TYPE_NAME -> users = userRepository.findAllByUserType_Name(ADMIN_USER_TYPE_NAME, pageable)
-            LAWYER_USER_TYPE_NAME -> users = userRepository.findAllByUserType_Name(LAWYER_USER_TYPE_NAME, pageable)
-            else -> users = userRepository.findAllByUserType_Name(FINANCE_USER_TYPE_NAME, pageable)
+        users = when (user?.userType?.name) {
+            ADMIN_USER_TYPE_NAME -> userRepository.findAll(pageable)
+            FINANCE_USER_TYPE_NAME -> userRepository.findAllByUserType_Name(LAWYER_USER_TYPE_NAME, pageable)
+            else -> userRepository.findAllByUserType_Name(FINANCE_USER_TYPE_NAME, pageable)
+        }
+        return users
+    }
+
+    fun list(): List<User> {
+        val users: List<User>
+        val user: User? = authUser
+        users = when (user?.userType?.name) {
+            ADMIN_USER_TYPE_NAME -> userRepository.findAll()
+            FINANCE_USER_TYPE_NAME -> userRepository.findAllByUserTypeName(LAWYER_USER_TYPE_NAME)
+            else -> ArrayList()
         }
         return users
     }
@@ -158,6 +181,7 @@ class UserService(private val userRepository: UserRepository, private val userTy
 
     fun updatePassword(newPassword: String?, user: User): User {
         user.password = BCryptPasswordEncoder().encode(newPassword)
+        user.hasChangedPassword = true
         return save(user)
     }
 
@@ -178,7 +202,7 @@ class UserService(private val userRepository: UserRepository, private val userTy
         }
 
 
-    fun checkIfValidOldPassword(user: User, oldPassword: String?): Boolean {
-        return BCryptPasswordEncoder().matches(oldPassword, user.password)
+    fun checkIfValidOldPassword(user: User?, oldPassword: String): Boolean {
+        return BCryptPasswordEncoder().matches(oldPassword, user?.password)
     }
 }

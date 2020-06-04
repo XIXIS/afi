@@ -24,5 +24,3 @@ private val lastModifiedBy: Long? = null
 
 @LastModifiedDate
 private val lastModifiedDate: LocalDateTime? = null
-
-

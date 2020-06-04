@@ -10,7 +10,10 @@ interface UserRepository : PagingAndSortingRepository<User?, Long?> {
 
     fun findByEmail(email: String?): Optional<User>
     fun findByPhone(phone: String): Optional<User>
-    fun findAllByUserType_Name(name: String, pageable: Pageable?): Page<User>
+    fun findAllByUserType_Name(name: String, pageable: Pageable?): Page<User?>
+    fun findAllByUserTypeName(name: String): List<User>
+    override fun findAll(): List<User>
+    override fun findAll(pageable: Pageable): Page<User?>
     fun findAllByUserType_NameAndFirstNameContainsOrUserType_NameAndLastNameContainsOrUserType_NameAndEmailContainsOrUserType_NameAndPhoneContains(
             userTypeName: String, firstName: String,
             userTypeName1: String, lastName: String,
