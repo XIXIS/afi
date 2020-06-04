@@ -35,7 +35,7 @@ class UserService(private val userRepository: UserRepository, private val userTy
         return user.get()
     }
 
-    fun findByEmail(email: String): Optional<User> {
+    fun findByEmail(email: String?): Optional<User> {
         return userRepository.findByEmail(email)
     }
 

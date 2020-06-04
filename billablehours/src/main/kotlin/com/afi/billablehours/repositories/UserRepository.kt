@@ -8,7 +8,7 @@ import java.util.*
 
 interface UserRepository : PagingAndSortingRepository<User?, Long?> {
 
-    fun findByEmail(email: String): Optional<User>
+    fun findByEmail(email: String?): Optional<User>
     fun findByPhone(phone: String): Optional<User>
     fun findAllByUserType_Name(name: String, pageable: Pageable?): Page<User>
     fun findAllByUserType_NameAndFirstNameContainsOrUserType_NameAndLastNameContainsOrUserType_NameAndEmailContainsOrUserType_NameAndPhoneContains(

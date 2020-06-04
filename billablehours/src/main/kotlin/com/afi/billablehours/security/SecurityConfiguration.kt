@@ -71,7 +71,7 @@ class SecurityConfiguration: WebSecurityConfigurerAdapter() {
                     .antMatchers(HttpMethod.OPTIONS).permitAll()
                     .requestMatchers(EndpointRequest.to("info")).permitAll()
                     .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
-                    .antMatchers("/auth/**", "/home").permitAll()
+                    .antMatchers("/api/v1/auth/**", "/home").permitAll()
                     .antMatchers("/actuator/**").hasRole("ADMIN") // all other requests need to be authenticated
                     .anyRequest().authenticated().and() // make sure we use stateless session; session won't be used to
                     // store user's state.

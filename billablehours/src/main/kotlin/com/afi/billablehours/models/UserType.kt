@@ -16,7 +16,7 @@ class UserType() : Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue
     var id: Long = 0
 
     @Column(nullable = false)

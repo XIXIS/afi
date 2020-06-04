@@ -29,7 +29,7 @@ class User() : Auditable(), UserDetails {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue
     var id: Long? = null
 
     @NotEmpty(message = "First Name is required.")
