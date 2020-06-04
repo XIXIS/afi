@@ -7,8 +7,13 @@ import com.afi.billablehours.models.requests.CreateUserRequest
 import com.afi.billablehours.repositories.UserRepository
 import com.afi.billablehours.repositories.UserTypeRepository
 import com.afi.billablehours.utils.Constants.Companion.ADMIN_USER_TYPE_NAME
+import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_USER_TYPE
+import com.afi.billablehours.utils.Constants.Companion.ERROR_PHONE_EMAIL_MAY_EXIST
+import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_CREATION
+import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_TYPE_NOT_FOUND
 import com.afi.billablehours.utils.Constants.Companion.FINANCE_USER_TYPE_NAME
 import com.afi.billablehours.utils.Constants.Companion.LAWYER_USER_TYPE_NAME
+import com.afi.billablehours.utils.Constants.Companion.SUCCESS_USER_CREATED
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -49,9 +54,13 @@ class UserService(private val userRepository: UserRepository, private val userTy
         user.lastName = newUser.lastName
         user.phone = newUser.phone
         user.email = newUser.email
-        user.enabled = true
-
         val userType : Optional<UserType?> = userTypeRepository.findById(newUser.userTypeId)
+        if(!userType.isPresent)
+            return ResponseEntity<Any?>(
+                    APIResponse<String>(ERROR_USER_TYPE_NOT_FOUND(newUser.userTypeId), ERROR_INVALID_USER_TYPE),
+                    HttpStatus.UNPROCESSABLE_ENTITY
+            )
+        user.userType = userType.get()
 
         // encrypt and save password
         user.password = BCryptPasswordEncoder().encode("password")
@@ -61,13 +70,13 @@ class UserService(private val userRepository: UserRepository, private val userTy
             val savedUser: User = save(user)
             println("User successfully created--------")
             return ResponseEntity<Any?>(
-                    APIResponse(savedUser, "User registered successfully"),
+                    APIResponse(savedUser, SUCCESS_USER_CREATED),
                     HttpStatus.OK
             )
         } catch (e: Exception) {
             println(e.message)
             return ResponseEntity<Any?>(
-                    APIResponse<String>("Phone or email may already exist", "User registration FAILED"),
+                    APIResponse<String>(ERROR_PHONE_EMAIL_MAY_EXIST, ERROR_USER_CREATION),
                     HttpStatus.UNPROCESSABLE_ENTITY
             )
         }

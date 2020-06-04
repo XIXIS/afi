@@ -1,24 +1,23 @@
 package com.afi.billablehours.controllers
 
+//import org.springframework.hateoas.PagedResources
 import com.afi.billablehours.models.APIResponse
-import com.afi.billablehours.models.User
 import com.afi.billablehours.models.UserType
+import com.afi.billablehours.models.requests.CreateUserRequest
 import com.afi.billablehours.services.UserService
 import com.afi.billablehours.services.UserTypeService
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
-import org.springframework.data.web.PagedResourcesAssembler
-//import org.springframework.hateoas.PagedResources
+import com.afi.billablehours.utils.Constants.Companion.ERROR_PERMISSION_DENIED
+import com.afi.billablehours.utils.Constants.Companion.SUCCESS_USER_TYPES_LIST
+import com.afi.billablehours.validators.Validator
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
-import java.util.*
 import javax.validation.Valid
 import javax.validation.constraints.NotNull
 
 @RestController
+@RequestMapping(value=["api/v1"])
 class UserController(private val userService: UserService, private val userTypeService: UserTypeService) {
 
     // list
@@ -76,7 +75,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
-     * "Authorization": "Bearer djkaljdkfajdfaodpjoakf"
+     * "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
      * @apiVersion 0.1.0
      * @apiSuccessExample {json} Success-Response:
@@ -102,13 +101,13 @@ class UserController(private val userService: UserService, private val userTypeS
 
     // list user types
     /**
-     * @api {get} /users List user types
+     * @api {get} /user-types List user types
      * @apiDescription List user types
      * @apiGroup Users
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
-     * "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
+     * "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
      * @apiVersion 0.1.0
      * @apiSuccessExample {json} Success-Response:
@@ -118,19 +117,21 @@ class UserController(private val userService: UserService, private val userTypeS
      *  "data": [{ 'name': '', ... },{ 'mame': '', ... }, ...]
      * }
      */
-    @GetMapping(value = ["/users/types"])
+    @GetMapping(value = ["/user-types"])
     fun listTypes(): ResponseEntity<*> {
         val userTypes: List<UserType> = userTypeService.listAll()
-        return if (userTypes.isEmpty()) {
+        return if (!userService.isAdmin) {
             ResponseEntity(
-                    APIResponse<String>("Forbidden Action", "You are not permitted to access this resource"),
+                    APIResponse<String>(HttpStatus.FORBIDDEN.reasonPhrase, ERROR_PERMISSION_DENIED),
                     HttpStatus.FORBIDDEN
             )
         } else ResponseEntity<Any?>(
-                APIResponse(userTypes, "User types listed"),
+                APIResponse(userTypes, SUCCESS_USER_TYPES_LIST),
                 HttpStatus.OK
         )
     }
+
+
     // create user
     /**
      * @api {post} /users Create users
@@ -139,41 +140,43 @@ class UserController(private val userService: UserService, private val userTypeS
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
-     * "Authorization": "Bearer djkaljdkfajdfaodpjoakf"
+     * "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
      * @apiVersion 0.1.0
      * @apiParam {String} firstName first name of user
      * @apiParam {String} lastName last name of user
      * @apiParam {String} email email of user
      * @apiParam {String} phone phone of user
-     * @apiParam {Number} roleId role id of user
+     * @apiParam {Number} userTypeId user type id of user
      *
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     * "data": {
-     * 'firstName': 'Some',
-     * 'lastName': 'Name',
-     * ....
-     * },
-     * "message": "User successfully created"
+     *  "data": {
+     *      'firstName': 'Some',
+     *      'lastName': 'Name',
+     *      ....
+     *  },
+     *  "message": "User successfully created"
      * }
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 422 Unprocessable Entity
      * {
-     * "error": "Some technical error message",
-     * "message": "Simple error message"
+     *  "error": "Some technical error message",
+     *  "message": "Simple error message"
      * }
      */
-//    @PostMapping(value = ["/users"])
-//    fun create(@RequestBody request: @NotNull @Valid CreateUserRequest?,
-//               bindingResult: @NotNull BindingResult?): ResponseEntity<*> {
-//        System.out.println(request.toString())
-//        if (bindingResult!!.hasErrors()) return Validator(bindingResult).validateWithResponse()
-//        return if (!userService.hasPermission(userService.getAuthUser(), CREATE_USER)) {
-//            userService.getPermissionDeniedResponse()
-//        } else userService.register(request)
-//    }
+    @PostMapping(value = ["/users"])
+    fun create(@RequestBody request: @NotNull @Valid CreateUserRequest, bindingResult: @NotNull BindingResult?): ResponseEntity<*> {
+        println(request.toString())
+        if (bindingResult!!.hasErrors()) return Validator(bindingResult).validateWithResponse()
+        return if (!userService.isAdmin) {
+            ResponseEntity<Any>(
+                    APIResponse<String>(HttpStatus.FORBIDDEN.reasonPhrase, ERROR_PERMISSION_DENIED),
+                    HttpStatus.FORBIDDEN
+            )
+        } else userService.register(request)
+    }
 
 
     // update user
