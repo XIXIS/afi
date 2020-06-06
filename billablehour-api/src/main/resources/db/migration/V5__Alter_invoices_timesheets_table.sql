@@ -1,0 +1,1 @@
+ALTER TABLE `invoices_timesheets` CHANGE COLUMN `timesheet_id` `timesheets_id` bigint(20) NOT NULL;

@@ -40,6 +40,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation( "javax.validation:validation-api:2.0.1.Final")
     implementation("com.github.slugify:slugify:2.4")
+    implementation("joda-time:joda-time:2.10.6")
+    implementation("com.google.guava:guava:29.0-jre")
 
     implementation("io.jsonwebtoken:jjwt-api:0.10.7")
     implementation("io.jsonwebtoken:jjwt-jackson:0.10.7")

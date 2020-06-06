@@ -166,7 +166,7 @@ class GradeController(private val userService: UserService, private val gradeSer
             val grade: Grade = gradeService.create(request)
             return try{
                 ResponseEntity<Any?>(
-                        APIResponse(gradeService.save(grade), SUCCESS_GRADE_CREATED),
+                        APIResponse(grade, SUCCESS_GRADE_CREATED),
                         HttpStatus.OK
                 )
             }catch(ex: Exception){

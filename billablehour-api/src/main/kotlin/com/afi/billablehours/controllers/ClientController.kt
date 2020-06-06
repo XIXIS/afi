@@ -34,7 +34,7 @@ class ClientController(private val clientService: ClientService) : Auditable() {
     /**
      * @api {get} /clients List clients
      * @apiDescription List clients
-     * @apiGroup clients
+     * @apiGroup Clients
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
@@ -78,7 +78,7 @@ class ClientController(private val clientService: ClientService) : Auditable() {
     /**
      * @api {get} /list/clients List clients non-paginated
      * @apiDescription List clients
-     * @apiGroup clients
+     * @apiGroup Clients
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
@@ -109,7 +109,7 @@ class ClientController(private val clientService: ClientService) : Auditable() {
     /**
      * @api {get} /search/clients?key= Search clients
      * @apiDescription Search clients
-     * @apiGroup clients
+     * @apiGroup Clients
      * @apiExample {curl} Example usage:
      * curl -i /clients/search?key=MTN
      * @apiHeader {String} Authorization Bearer Token
@@ -150,7 +150,7 @@ class ClientController(private val clientService: ClientService) : Auditable() {
     /**
      * @api {post} /clients Create client
      * @apiDescription Create client
-     * @apiGroup clients
+     * @apiGroup Clients
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
@@ -183,7 +183,7 @@ class ClientController(private val clientService: ClientService) : Auditable() {
         if (bindingResult.hasErrors()) { return Validator(bindingResult).validateWithResponse() }
         val newClient: Client = clientService.create(request)
         return ResponseEntity<Any?>(
-                APIResponse(clientService.save(newClient), SUCCESS_CLIENT_CREATED),
+                APIResponse(newClient, SUCCESS_CLIENT_CREATED),
                 HttpStatus.OK
         )
     }
@@ -193,7 +193,7 @@ class ClientController(private val clientService: ClientService) : Auditable() {
     /**
      * @api {put} /clients/:clientId Update client
      * @apiDescription Update client
-     * @apiGroup clients
+     * @apiGroup Clients
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
@@ -238,7 +238,7 @@ class ClientController(private val clientService: ClientService) : Auditable() {
     /**
      * @api {get} /clients/:clientId Find client detail
      * @apiDescription Get details of a client
-     * @apiGroup clients
+     * @apiGroup Clients
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {

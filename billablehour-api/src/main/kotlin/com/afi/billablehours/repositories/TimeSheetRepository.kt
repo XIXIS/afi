@@ -9,6 +9,8 @@ interface TimeSheetRepository : PagingAndSortingRepository<TimeSheet?, Long?> {
 
     fun findAllByUserId(userId: Long?, pageable: Pageable): Page<TimeSheet?>
     fun findAllByUserId(userId: Long?): List<TimeSheet?>
+    fun findAllByClientId(userId: Long?): List<TimeSheet?>
+    fun findAllByClientIdAndInvoicedFalse(userId: Long?): List<TimeSheet?>
 
 
 }
