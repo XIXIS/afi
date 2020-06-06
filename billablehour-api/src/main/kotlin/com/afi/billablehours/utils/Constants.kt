@@ -11,7 +11,7 @@ class Constants {
         const val SUCCESS_LOGIN = "Login Successful"
         const val SUCCESS_USER_TYPES_LIST = "List of User Types"
         const val SUCCESS_USER_CREATED = "User Successfully created"
-        const val SUCCESS_COMPANY_CREATED = "Company Successfully created"
+        const val SUCCESS_CLIENT_CREATED = "Client Successfully created"
         const val SUCCESS_USER_DETAIL = "User details found"
         const val SUCCESS_USER_DETAIL_UPDATED = "User details successfully updated"
         const val SUCCESS_PASSWORD_UPDATED = "Password successfully updated"

@@ -81,7 +81,8 @@ class UserService(private val userRepository: UserRepository, private val userTy
             )
         }
 
-        if(newUser.gradeId!=null){
+
+        if(newUser.gradeId!=null && userType.get().name != LAWYER_USER_TYPE_NAME){
             val grade: Optional<Grade?> = gradeService.findById(newUser.gradeId!!)
             if (!grade.isPresent)
                 return ResponseEntity<Any?>(

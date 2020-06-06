@@ -156,10 +156,11 @@ class TimeSheetController(private val userService: UserService, private val time
                     HttpStatus.FORBIDDEN
             )
         } else {
-            val timeSheet: TimeSheet = timeSheetService.create(request)
+
             return try {
+                val timeSheet: TimeSheet = timeSheetService.create(request)
                 ResponseEntity<Any?>(
-                        APIResponse(timeSheetService.save(timeSheet), SUCCESS_TIMESHEET_CREATED),
+                        APIResponse(timeSheet, SUCCESS_TIMESHEET_CREATED),
                         HttpStatus.OK
                 )
             } catch (ex: ClientNotFoundException) {

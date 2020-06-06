@@ -11,7 +11,7 @@ import com.afi.billablehours.utils.Constants.Companion.ERROR_CLIENT_NOT_FOUND
 import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_CLIENT
 import com.afi.billablehours.utils.Constants.Companion.ERROR_NON_EXISTENT_CLIENT
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_CLIENTS_LIST
-import com.afi.billablehours.utils.Constants.Companion.SUCCESS_COMPANY_CREATED
+import com.afi.billablehours.utils.Constants.Companion.SUCCESS_CLIENT_CREATED
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_CLIENT_DETAIL
 import com.afi.billablehours.validators.Validator
 import org.springframework.data.domain.Page
@@ -179,11 +179,11 @@ class ClientController(private val clientService: ClientService) : Auditable() {
      * }
      */
     @PostMapping(value = ["/clients"])
-    fun createCompany(@RequestBody @Valid request:  CreateClientRequest, bindingResult: BindingResult): ResponseEntity<*>? {
+    fun createClient(@RequestBody @Valid request:  CreateClientRequest, bindingResult: BindingResult): ResponseEntity<*>? {
         if (bindingResult.hasErrors()) { return Validator(bindingResult).validateWithResponse() }
         val newClient: Client = clientService.create(request)
         return ResponseEntity<Any?>(
-                APIResponse(clientService.save(newClient), SUCCESS_COMPANY_CREATED),
+                APIResponse(clientService.save(newClient), SUCCESS_CLIENT_CREATED),
                 HttpStatus.OK
         )
     }
