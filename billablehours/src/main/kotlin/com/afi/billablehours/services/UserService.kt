@@ -10,8 +10,10 @@ import com.afi.billablehours.repositories.UserTypeRepository
 import com.afi.billablehours.utils.Constants.Companion.ADMIN_USER_TYPE_NAME
 import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_USER_TYPE
 import com.afi.billablehours.utils.Constants.Companion.ERROR_DUPLICATE_NON_EXISTENT
+import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_EXPECTED
 import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_NOT_FOUND
 import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_GRADE
+import com.afi.billablehours.utils.Constants.Companion.ERROR_LAWYER_CREATION
 import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_CREATION
 import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_TYPE_NOT_FOUND
 import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_UPDATE
@@ -56,7 +58,7 @@ class UserService(private val userRepository: UserRepository, private val userTy
     }
 
     fun register(newUser: CreateUserRequest): ResponseEntity<Any?> {
-        val user: User = User()
+        val user = User()
         user.firstName = newUser.firstName
         user.lastName = newUser.lastName
         user.phone = newUser.phone
@@ -71,6 +73,13 @@ class UserService(private val userRepository: UserRepository, private val userTy
 
         // encrypt and save password
         user.password = BCryptPasswordEncoder().encode("password")
+
+        if(userType.get().name == LAWYER_USER_TYPE_NAME && newUser.gradeId==null){
+            return ResponseEntity<Any?>(
+                    APIResponse<String>(ERROR_GRADE_EXPECTED, ERROR_LAWYER_CREATION),
+                    HttpStatus.UNPROCESSABLE_ENTITY
+            )
+        }
 
         if(newUser.gradeId!=null){
             val grade: Optional<Grade?> = gradeService.findById(newUser.gradeId!!)

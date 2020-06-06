@@ -13,10 +13,14 @@ import com.afi.billablehours.utils.Constants
 import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_CREATION
 import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_NOT_FOUND
 import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_COMPANY
+import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_TIMESHEET
 import com.afi.billablehours.utils.Constants.Companion.ERROR_NON_EXISTENT_COMPANY
 import com.afi.billablehours.utils.Constants.Companion.ERROR_TIMESHEET_CREATION
+import com.afi.billablehours.utils.Constants.Companion.ERROR_TIMESHEET_NOT_FOUND
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_GRADE_CREATED
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_GRADE_DETAIL
+import com.afi.billablehours.utils.Constants.Companion.SUCCESS_TIMESHEET_CREATED
+import com.afi.billablehours.utils.Constants.Companion.SUCCESS_TIMESHEET_DETAIL
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_TIMESHEET_LIST
 import com.afi.billablehours.utils.exceptions.CompanyNotFoundException
 import com.afi.billablehours.validators.Validator
@@ -46,7 +50,7 @@ class TimeSheetController(private val userService: UserService, private val time
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -91,7 +95,7 @@ class TimeSheetController(private val userService: UserService, private val time
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -115,8 +119,7 @@ class TimeSheetController(private val userService: UserService, private val time
     }
 
 
-
-    //create timesheet
+    //create timesheet entry
     /**
      * @api {post} /timesheets Create timesheet entry
      * @apiDescription Create timesheet entry
@@ -126,7 +129,7 @@ class TimeSheetController(private val userService: UserService, private val time
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiParam {String} companyId id of company
      * @apiParam {String} date date of project
      * @apiParam {String} startTime project start time
@@ -150,7 +153,9 @@ class TimeSheetController(private val userService: UserService, private val time
      */
     @PostMapping(value = ["/timesheets"])
     fun create(@RequestBody @Valid request: CreateTimeSheetEntryRequest, bindingResult: BindingResult): ResponseEntity<*>? {
-        if (bindingResult.hasErrors()) { return Validator(bindingResult).validateWithResponse() }
+        if (bindingResult.hasErrors()) {
+            return Validator(bindingResult).validateWithResponse()
+        }
 
         return if (!userService.isLawyer) {
             ResponseEntity<Any>(
@@ -159,19 +164,19 @@ class TimeSheetController(private val userService: UserService, private val time
             )
         } else {
             val timeSheet: TimeSheet = timeSheetService.create(request)
-            return try{
+            return try {
                 ResponseEntity<Any?>(
-                        APIResponse(timeSheetService.save(timeSheet), SUCCESS_GRADE_CREATED),
+                        APIResponse(timeSheetService.save(timeSheet), SUCCESS_TIMESHEET_CREATED),
                         HttpStatus.OK
                 )
-            }catch(ex: CompanyNotFoundException){
+            } catch (ex: CompanyNotFoundException) {
                 ResponseEntity<Any?>(
-                        APIResponse(ex.message,ERROR_TIMESHEET_CREATION),
+                        APIResponse<String?>(ex.message, ERROR_TIMESHEET_CREATION),
                         HttpStatus.UNPROCESSABLE_ENTITY
                 )
-            } catch(ex: Exception){
+            } catch (ex: Exception) {
                 ResponseEntity<Any?>(
-                        APIResponse(ex.message,ERROR_TIMESHEET_CREATION),
+                        APIResponse<String?>(ex.message, ERROR_TIMESHEET_CREATION),
                         HttpStatus.UNPROCESSABLE_ENTITY
                 )
             }
@@ -183,7 +188,7 @@ class TimeSheetController(private val userService: UserService, private val time
 
     // update grade
     /**
-     * @api {put} /grades/:gradeId Update grade
+     * @api {put} /timesheets/:timesheetId Update timesheet
      * @apiDescription Update grade
      * @apiGroup Grades
      * @apiHeader {String} Authorization Bearer Token
@@ -191,7 +196,7 @@ class TimeSheetController(private val userService: UserService, private val time
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiParam {String} name name of grade
      * @apiParam {String} rate billable rate
      * @apiSuccessExample {json} Success-Response:
@@ -210,31 +215,31 @@ class TimeSheetController(private val userService: UserService, private val time
      *  "message": "Simple error message"
      * }
      */
-    @PutMapping(value = ["/grades/{gradeId}"])
-    fun update(@PathVariable gradeId: Long, @RequestBody @Valid editCompany: CreateGradeRequest, bindingResult: BindingResult): ResponseEntity<*>? {
+    @PutMapping(value = ["/timesheets/{timesheetId}"])
+    fun update(@PathVariable timesheetId: Long, @RequestBody @Valid timesheetReq: CreateTimeSheetEntryRequest, bindingResult: BindingResult): ResponseEntity<*>? {
 
-        return if (userService.isLawyer) {
+        return if (!userService.isLawyer) {
             ResponseEntity<Any>(
                     APIResponse<String>(HttpStatus.FORBIDDEN.reasonPhrase, Constants.ERROR_PERMISSION_DENIED),
                     HttpStatus.FORBIDDEN
             )
         } else {
-            val grade: Optional<Grade?> = gradeService.findById(gradeId)
-            if (!grade.isPresent) {
+            val timeSheet: Optional<TimeSheet?> = timeSheetService.findById(timesheetId)
+            if (!timeSheet.isPresent) {
                 return ResponseEntity<Any>(
-                        APIResponse<String>(ERROR_GRADE_NOT_FOUND(gradeId), ERROR_INVALID_COMPANY),
+                        APIResponse<String>(ERROR_TIMESHEET_NOT_FOUND(timesheetId), ERROR_INVALID_COMPANY),
                         HttpStatus.NOT_FOUND
                 )
             }
             if (bindingResult.hasErrors()) return Validator(bindingResult).validateWithResponse()
-            return gradeService.update(editCompany, grade.get())
+            return timeSheetService.update(timesheetReq, timeSheet.get())
         }
     }
 
 
     // find company detail
     /**
-     * @api {get} /grade/:gradeId Find grade detail
+     * @api {get} /timesheets/:timesheetId Find timesheet entry detail
      * @apiDescription Get details of a grade
      * @apiGroup Grades
      * @apiHeader {String} Authorization Bearer Token
@@ -256,19 +261,19 @@ class TimeSheetController(private val userService: UserService, private val time
      *  "message": "Simple error message"
      * }
      */
-    @GetMapping(value = ["/grades/{gradeId}"])
-    fun detail(@PathVariable gradeId: Long): ResponseEntity<*>? {
-        val grade: Optional<Grade?> = gradeService.findById(gradeId)
-        if (grade.isPresent) {
-            return ResponseEntity<Any?>(
-                    APIResponse(grade.get(), SUCCESS_GRADE_DETAIL),
+    @GetMapping(value = ["/timesheets/{timesheetId}"])
+    fun detail(@PathVariable timesheetId: Long): ResponseEntity<*>? {
+        val timeSheet: Optional<TimeSheet?> = timeSheetService.findById(timesheetId)
+        return if (timeSheet.isPresent) {
+            ResponseEntity<Any?>(
+                    APIResponse(timeSheet.get(), SUCCESS_TIMESHEET_DETAIL),
                     HttpStatus.OK)
+        } else {
+            ResponseEntity<Any?>(
+                    APIResponse<String>(ERROR_TIMESHEET_NOT_FOUND(timesheetId), ERROR_INVALID_TIMESHEET),
+                    HttpStatus.NOT_FOUND
+            )
         }
-        return ResponseEntity<Any?>(
-                APIResponse<String>(ERROR_GRADE_NOT_FOUND(gradeId), ERROR_NON_EXISTENT_COMPANY),
-                HttpStatus.NOT_FOUND
-        )
+
     }
-
-
 }

@@ -1,5 +1,3 @@
-ALTER TALBE `users` ADD COLUMN `grade_id` bigint(20) DEFAULT NULL;
-
 CREATE TABLE `grades`
 (
     `id`                   bigint(20)   NOT NULL,
@@ -14,7 +12,7 @@ CREATE TABLE `grades`
     UNIQUE KEY `UK_6098hjkduy723ndk12390pe5s3` (`alias`)
 ) DEFAULT CHARSET = utf8;
 
-ALTER TALBE `users` ADD CONSTRAINT `FK1234567890poiuytrewasdfg` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`);
+ALTER TABLE `users` ADD CONSTRAINT `FK1234567890poiuytrewasdfg` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`);
 
 CREATE TABLE `companies`
 (
@@ -45,7 +43,9 @@ CREATE TABLE `timesheets`
     `date`                 date     NOT NULL,
     `start_time`           time NOT NULL,
     `end_time`             time NOT NULL,
-    PRIMARY KEY (`id`)
-    CONSTRAINT `FK32UzUxMiJ9JzdWIiOiRob255L3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-    CONSTRAINT `FK325a23450poi456ewasdfg1993` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`);
+    `invoiced`             bit(1) NOT NULL,
+    `rate`                 double NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `FK32UzUxMiJ9JzdWIiOiRob255L3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+    CONSTRAINT `FK325a23450poi456ewasdfg1993` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`)
 ) DEFAULT CHARSET = utf8;

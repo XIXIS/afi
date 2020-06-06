@@ -12,12 +12,13 @@ import javax.persistence.*
 @Table(name = "timesheets")
 class TimeSheet() : Auditable() {
 
-    constructor(user: User?, company: Company?, date: LocalDate?, startTime: LocalTime?, endTime: LocalTime?): this(){
+    constructor(user: User?, rate: Double?, company: Company?, date: LocalDate?, startTime: LocalTime?, endTime: LocalTime?) : this() {
         this.user = user
         this.company = company
         this.date = date
         this.startTime = startTime
         this.endTime = endTime
+        this.rate = rate
     }
 
     @Id
@@ -25,12 +26,13 @@ class TimeSheet() : Auditable() {
     var id: Long? = null
 
     @NonNull
-    @Column(nullable = false)
     @OneToOne
     var user: User? = null
 
     @NonNull
-    @Column(nullable = false)
+    var rate: Double? = null
+
+    @NonNull
     @OneToOne
     var company: Company? = null
 
@@ -46,4 +48,7 @@ class TimeSheet() : Auditable() {
     @Column(nullable = false)
     var endTime: LocalTime? = null
 
+    @NonNull
+    @Column(nullable = false)
+    var invoiced: Boolean? = false
 }

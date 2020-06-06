@@ -1,12 +1,9 @@
 package com.afi.billablehours.services
 
 import com.afi.billablehours.models.APIResponse
-import com.afi.billablehours.models.Company
 import com.afi.billablehours.models.Grade
 import com.afi.billablehours.models.requests.CreateGradeRequest
 import com.afi.billablehours.repositories.GradeRepository
-import com.afi.billablehours.repositories.UserRepository
-import com.afi.billablehours.utils.Constants.Companion.SUCCESS_COMPANY_CREATED
 import com.github.slugify.Slugify
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

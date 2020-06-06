@@ -152,11 +152,11 @@ class GradeController(private val userService: UserService, private val gradeSer
      *  "message": "Simple error message"
      * }
      */
-    @PostMapping(value = ["/companies"])
+    @PostMapping(value = ["/grades"])
     fun create(@RequestBody @Valid request: CreateGradeRequest, bindingResult: BindingResult): ResponseEntity<*>? {
         if (bindingResult.hasErrors()) { return Validator(bindingResult).validateWithResponse() }
 
-        return if (userService.isLawyer) {
+        return if (!userService.isAdmin) {
             ResponseEntity<Any>(
                     APIResponse<String>(HttpStatus.FORBIDDEN.reasonPhrase, Constants.ERROR_PERMISSION_DENIED),
                     HttpStatus.FORBIDDEN
@@ -170,7 +170,7 @@ class GradeController(private val userService: UserService, private val gradeSer
                 )
             }catch(ex: Exception){
                 ResponseEntity<Any?>(
-                        APIResponse(ex.message,ERROR_GRADE_CREATION),
+                        APIResponse<String?>(ex.message,ERROR_GRADE_CREATION),
                         HttpStatus.UNPROCESSABLE_ENTITY
                 )
             }
@@ -210,9 +210,9 @@ class GradeController(private val userService: UserService, private val gradeSer
      * }
      */
     @PutMapping(value = ["/grades/{gradeId}"])
-    fun update(@PathVariable gradeId: Long, @RequestBody @Valid editCompany: CreateGradeRequest, bindingResult: BindingResult): ResponseEntity<*>? {
+    fun update(@PathVariable gradeId: Long, @RequestBody @Valid editGrade: CreateGradeRequest, bindingResult: BindingResult): ResponseEntity<*>? {
 
-        return if (userService.isLawyer) {
+        return if (!userService.isAdmin) {
             ResponseEntity<Any>(
                     APIResponse<String>(HttpStatus.FORBIDDEN.reasonPhrase, Constants.ERROR_PERMISSION_DENIED),
                     HttpStatus.FORBIDDEN
@@ -226,7 +226,7 @@ class GradeController(private val userService: UserService, private val gradeSer
                 )
             }
             if (bindingResult.hasErrors()) return Validator(bindingResult).validateWithResponse()
-            return gradeService.update(editCompany, grade.get())
+            return gradeService.update(editGrade, grade.get())
         }
     }
 

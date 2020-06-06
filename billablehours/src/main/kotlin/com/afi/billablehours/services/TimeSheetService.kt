@@ -1,30 +1,22 @@
 package com.afi.billablehours.services
 
-import com.afi.billablehours.models.*
-import com.afi.billablehours.models.requests.CreateCompanyRequest
-import com.afi.billablehours.models.requests.CreateGradeRequest
+import com.afi.billablehours.models.APIResponse
+import com.afi.billablehours.models.Company
+import com.afi.billablehours.models.TimeSheet
+import com.afi.billablehours.models.User
 import com.afi.billablehours.models.requests.CreateTimeSheetEntryRequest
-import com.afi.billablehours.repositories.CompanyRepository
 import com.afi.billablehours.repositories.TimeSheetRepository
-import com.afi.billablehours.repositories.UserRepository
-import com.afi.billablehours.utils.Constants
 import com.afi.billablehours.utils.Constants.Companion.ERROR_COMPANY_NOT_FOUND
+import com.afi.billablehours.utils.Constants.Companion.ERROR_TIMESHEET_UPDATE
 import com.afi.billablehours.utils.Constants.Companion.LAWYER_USER_TYPE_NAME
-import com.afi.billablehours.utils.Constants.Companion.SUCCESS_COMPANY_CREATED
 import com.afi.billablehours.utils.exceptions.CompanyNotFoundException
-import org.springframework.core.io.ClassPathResource
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.scheduling.annotation.Async
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
-import org.springframework.web.multipart.MultipartFile
-import java.io.*
+import java.io.Serializable
 import java.util.*
-import javax.transaction.Transactional
-import kotlin.collections.ArrayList
 
 @Service
 class TimeSheetService(private val userService: UserService, private val timeSheetRepository: TimeSheetRepository,
@@ -58,30 +50,43 @@ class TimeSheetService(private val userService: UserService, private val timeShe
     fun create(request: CreateTimeSheetEntryRequest): TimeSheet {
 
         val company: Optional<Company?> = companyService.findById(request.companyId)
-        if(!company.isPresent){
+        if (!company.isPresent) {
             throw CompanyNotFoundException(ERROR_COMPANY_NOT_FOUND(request.companyId))
         }
-        val timeSheet = TimeSheet(userService.authUser, company.get(), request.date, request.startTime, request.endTime)
+        val user: User? = userService.authUser
+        val timeSheet = TimeSheet(user, user?.grade?.rate, company.get(), request.date, request.startTime, request.endTime)
         return save(timeSheet)
     }
 
-//
-//    fun update(request: CreateTimeSheetEntry, timeSheetRepository: TimeSheetRepository): ResponseEntity<*>? {
-//        company.name = request.name
-//        company.email = request.email
-//        company.phone = request.phone
-//        company.address = request.address
-//
-//        return ResponseEntity<Any?>(
-//                APIResponse(save(company), SUCCESS_COMPANY_CREATED),
-//                HttpStatus.OK
-//        )
-//    }
-//
-//    fun save(company: Company): Company {
-//        return companyRepository.save(company)
-//    }
-//
+    fun findById(id: Long): Optional<TimeSheet?> {
+        return timeSheetRepository.findById(id)
+    }
+
+
+    fun update(timeSheetReq: CreateTimeSheetEntryRequest, timeSheet: TimeSheet): ResponseEntity<*>? {
+        if (timeSheet.company?.id != timeSheetReq.companyId) {
+            val company: Optional<Company?> = companyService.findById(timeSheetReq.companyId)
+            if (!company.isPresent) {
+                throw CompanyNotFoundException(ERROR_COMPANY_NOT_FOUND(timeSheetReq.companyId))
+            }
+            timeSheet.company = company.get()
+        }
+        timeSheet.date = timeSheetReq.date
+        timeSheet.startTime = timeSheetReq.startTime
+        timeSheet.endTime = timeSheetReq.endTime
+
+        return try {
+            ResponseEntity<Any?>(
+                    APIResponse(save(timeSheet), "Timesheet successfully updated"),
+                    HttpStatus.OK
+            )
+        } catch (ex: Exception) {
+            ResponseEntity<Any?>(
+                    APIResponse<String?>(ex.message, ERROR_TIMESHEET_UPDATE),
+                    HttpStatus.UNPROCESSABLE_ENTITY
+            )
+        }
+    }
 
 
 }

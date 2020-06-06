@@ -15,7 +15,8 @@ data class CreateUserRequest(@NotNull @NotEmpty(message = "First Name is require
                              @NotNull var userTypeId: Long) : Serializable{
 
     final var gradeId: Long? =null
-    constructor(firstName: String,lastName:  String, phone: String, email: String, gradeId: Long, userTypeId: Long){
+    constructor(firstName: String,lastName:  String, phone: String, email: String, gradeId: Long, userTypeId: Long) :
+            this(firstName, lastName, phone, email, userTypeId){
         this.firstName = firstName
         this.lastName = lastName
         this.phone = phone
