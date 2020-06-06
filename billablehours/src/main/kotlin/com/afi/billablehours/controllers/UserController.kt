@@ -1,6 +1,5 @@
 package com.afi.billablehours.controllers
 
-//import org.springframework.hateoas.PagedResources
 import com.afi.billablehours.config.Auditable
 import com.afi.billablehours.models.APIResponse
 import com.afi.billablehours.models.User
@@ -59,7 +58,7 @@ class UserController(private val userService: UserService, private val userTypeS
      *  },
      *  "_links":{
      *      "first": {
-     *          "href": "http://localhost:8080/api/revenue-authorities?page=0&size=2",
+     *          "href": "http://localhost:8080/api/v1/users?page=0&size=2",
      *      },
      *      ...
      *  },

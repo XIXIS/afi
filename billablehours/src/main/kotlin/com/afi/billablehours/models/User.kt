@@ -63,6 +63,9 @@ class User() : Auditable(), UserDetails {
     @Column(nullable = false)
     var hasChangedPassword = false
 
+    @OneToOne
+    var grade: Grade? = null
+
     @JsonIgnore
     override fun getPassword(): String? {
         return password

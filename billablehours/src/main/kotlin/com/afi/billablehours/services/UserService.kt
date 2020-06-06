@@ -1,6 +1,7 @@
 package com.afi.billablehours.services
 
 import com.afi.billablehours.models.APIResponse
+import com.afi.billablehours.models.Grade
 import com.afi.billablehours.models.User
 import com.afi.billablehours.models.UserType
 import com.afi.billablehours.models.requests.CreateUserRequest
@@ -9,6 +10,8 @@ import com.afi.billablehours.repositories.UserTypeRepository
 import com.afi.billablehours.utils.Constants.Companion.ADMIN_USER_TYPE_NAME
 import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_USER_TYPE
 import com.afi.billablehours.utils.Constants.Companion.ERROR_DUPLICATE_NON_EXISTENT
+import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_NOT_FOUND
+import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_GRADE
 import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_CREATION
 import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_TYPE_NOT_FOUND
 import com.afi.billablehours.utils.Constants.Companion.ERROR_USER_UPDATE
@@ -32,7 +35,8 @@ import javax.transaction.Transactional
 import kotlin.collections.ArrayList
 
 @Service
-class UserService(private val userRepository: UserRepository, private val userTypeRepository: UserTypeRepository) : UserDetailsService, Serializable {
+class UserService(private val userRepository: UserRepository, private val userTypeRepository: UserTypeRepository,
+                  private val gradeService: GradeService) : UserDetailsService, Serializable {
 
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(email: String): UserDetails {
@@ -68,6 +72,16 @@ class UserService(private val userRepository: UserRepository, private val userTy
         // encrypt and save password
         user.password = BCryptPasswordEncoder().encode("password")
 
+        if(newUser.gradeId!=null){
+            val grade: Optional<Grade?> = gradeService.findById(newUser.gradeId!!)
+            if (!grade.isPresent)
+                return ResponseEntity<Any?>(
+                        APIResponse<String>(ERROR_GRADE_NOT_FOUND(newUser.gradeId), ERROR_INVALID_GRADE),
+                        HttpStatus.UNPROCESSABLE_ENTITY
+                )
+            user.grade = grade.get()
+        }
+
         // save user
         return try {
             val savedUser: User = save(user)
@@ -100,6 +114,16 @@ class UserService(private val userRepository: UserRepository, private val userTy
                         HttpStatus.UNPROCESSABLE_ENTITY
                 )
             existingUser.userType = userType.get()
+        }
+
+        if(existingUser.grade?.id != user.gradeId) {
+            val grade: Optional<Grade?> = gradeService.findById(user.gradeId!!)
+            if (!grade.isPresent)
+                return ResponseEntity<Any?>(
+                        APIResponse<String>(ERROR_GRADE_NOT_FOUND(user.gradeId), ERROR_INVALID_GRADE),
+                        HttpStatus.UNPROCESSABLE_ENTITY
+                )
+            existingUser.grade = grade.get()
         }
 
         // save user

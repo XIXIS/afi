@@ -11,21 +11,34 @@ class Constants {
         const val SUCCESS_LOGIN = "Login Successful"
         const val SUCCESS_USER_TYPES_LIST = "List of User Types"
         const val SUCCESS_USER_CREATED = "User Successfully created"
+        const val SUCCESS_COMPANY_CREATED = "Company Successfully created"
         const val SUCCESS_USER_DETAIL = "User details found"
         const val SUCCESS_USER_DETAIL_UPDATED = "User details successfully updated"
         const val SUCCESS_PASSWORD_UPDATED = "Password successfully updated"
-
+        const val SUCCESS_COMPANY_DETAIL = "Company details found"
+        const val SUCCESS_COMPANIES_LIST = "List of companies"
+        const val SUCCESS_GRADES_LIST = "List of grades"
+        const val SUCCESS_GRADE_CREATED = "Grade successfully created"
+        const val SUCCESS_GRADE_DETAIL = "Grade details found"
+        const val SUCCESS_TIMESHEET_LIST = "List of timesheets"
+        const val SUCCESS_TIMESHEET_CREATED = "Timesheet entry successfully created"
+        const val SUCCESS_TIMESHEET_DETAIL = "Timesheet details found"
 
         //Error Messages
         const val ERROR_NON_EXISTENT_USER = "User does not exist"
+        const val ERROR_NON_EXISTENT_COMPANY = "Company does not exist"
         const val ERROR_DISABLED_USER = "User is disabled"
         const val ERROR_WRONG_CREDENTIALS = "Wrong credentials provided"
         const val ERROR_SERVER = "Wrong credentials provided"
         const val ERROR_USER_CREATION = "An error occurred when creating new user"
+        const val ERROR_GRADE_CREATION = "An error occurred when creating new grade"
+        const val ERROR_TIMESHEET_CREATION = "An error occurred when creating new timesheet entry"
         const val ERROR_USER_UPDATE = "An error occurred when updating user details"
         const val ERROR_DUPLICATE_NON_EXISTENT = "Duplicate entries for unique fields or non existent parameters for required fields"
         const val ERROR_PERMISSION_DENIED = "You are not permitted to access this resource"
         const val ERROR_INVALID_USER_TYPE = "Invalid User Type selected"
+        const val ERROR_INVALID_GRADE = "Invalid grade selected"
+        const val ERROR_INVALID_COMPANY = "Invalid company selected"
         const val ERROR_VALIDATION = "Validation Error"
         const val ERROR_INCORRECT_OLD_PASSWORD = "Incorrect old password"
         const val ERROR_DISABLE_MY_ACCOUNT = "You cannot disable your own account"
@@ -36,6 +49,13 @@ class Constants {
         fun  ERROR_USER_NOT_FOUND(id: Long?): String {
             return "No User found for id: $id"
         }
+        fun  ERROR_COMPANY_NOT_FOUND(id: Long?): String {
+            return "No Company found for id: $id"
+        }
+        fun  ERROR_GRADE_NOT_FOUND(id: Long?): String {
+            return "No Grade found for id: $id"
+        }
+
 
     }
 
