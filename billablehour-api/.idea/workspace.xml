@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1913e114-ef40-4012-9ae9-c961bb48bf8f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/apidoc.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/settings.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/BillableHoursApplication.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/bootstrap/DatabaseLoader.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/config/Auditable.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/config/AuditorAwareImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/config/CorsConfig.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/config/JWTTokenUtil.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/config/JpaConfig.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/config/MethodArgumentNotValidExceptionHandler.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/controllers/AuthController.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/controllers/ClientController.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/controllers/GradeController.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/controllers/TimeSheetController.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/controllers/UserController.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/middlewares/JWTAuthEntryPoint.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/middlewares/JWTRequestFilter.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/ApiResponse.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/Client.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/Grade.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/TimeSheet.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/User.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/UserType.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/requests/ChangePasswordRequest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/requests/CreateClientRequest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/requests/CreateGradeRequest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/requests/CreateTimeSheetEntryRequest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/requests/CreateUserRequest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/models/requests/LoginRequest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/repositories/ClientRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/repositories/GradeRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/repositories/TimeSheetRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/repositories/UserRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/repositories/UserTypeRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/security/SecurityConfiguration.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/services/ClientService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/services/GradeService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/services/TimeSheetService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/services/UserService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/services/UserTypeService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/utils/Constants.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/utils/exceptions/ClientNotFoundException.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/kotlin/com/afi/billablehours/validators/Validator.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/resources/db/migration/V1__init.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/resources/db/migration/V2__Create_users_and_user_types_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/main/resources/db/migration/V3__Create_grades_clients_and_timesheets_tables.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../billablehours/src/test/kotlin/com/afi/billablehours/BillableHoursApplicationTests.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/api_data.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/api_data.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/api_project.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/api_project.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/fonts/glyphicons-halflings-regular.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/fonts/glyphicons-halflings-regular.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/fonts/glyphicons-halflings-regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/fonts/glyphicons-halflings-regular.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/fonts/glyphicons-halflings-regular.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/img/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/ca.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/cs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/de.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/es.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/fr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/it.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/locale.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/nl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/pl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/pt_br.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/ro.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/ru.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/tr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/vi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/zh.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/locales/zh_cn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/utils/handlebars_helper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/utils/send_sample_request.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/diff_match_patch.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/handlebars.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/jquery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/list.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/lodash.custom.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/path-to-regexp/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/path-to-regexp/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/polyfill.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-Splus.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-aea.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-agc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-apollo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-basic.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-cbm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-cl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-clj.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-css.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-dart.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-el.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-erl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-erlang.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-fs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-go.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-hs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-lasso.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-lassoscript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-latex.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-lgt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-lisp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-ll.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-llvm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-logtalk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-ls.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-lsp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-lua.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-matlab.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-ml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-mumps.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-n.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-nemerle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-pascal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-proto.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-r.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-rd.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-rkt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-rust.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-s.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-scala.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-scm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-sql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-ss.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-swift.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-tcl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-tex.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-vb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-vbs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-vhd.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-vhdl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-wiki.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-xq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-xquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-yaml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/lang-yml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/prettify.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/prettify.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/prettify/run_prettify.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/require.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/semver.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doc/vendor/webfontloader.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rewarder/build.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rewarder/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rewarder/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rewarder/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rewarder/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rewarder/settings.gradle.kts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rewarder/src/main/kotlin/com/afi/rewarder/RewarderApplication.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rewarder/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rewarder/src/test/kotlin/com/afi/rewarder/RewarderApplicationTests.kt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1chIm8Jtwq3MWTBEENims2kNbIF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.afi.billablehours.models.requests" />
+      <recent name="com.afi.billablehours.controllers" />
+      <recent name="com.afi.billablehours.services" />
+      <recent name="com.afi.billablehours.repositories" />
+      <recent name="com.afi.billablehours.models" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/db/migration" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.afi.billablehours.repositories" />
+      <recent name="com.afi.billablehours.config" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/kotlin/com/afi/billablehours/validators/interfaces" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="BillableHoursApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="billablehours.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.afi.billablehours.BillableHoursApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1913e114-ef40-4012-9ae9-c961bb48bf8f" name="Default Changelist" comment="" />
+      <created>1590974554436</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590974554436</updated>
+      <workItem from="1590974562279" duration="510000" />
+      <workItem from="1590975089695" duration="16803000" />
+      <workItem from="1591129011683" duration="12126000" />
+      <workItem from="1591184093255" duration="4754000" />
+      <workItem from="1591263330450" duration="41718000" />
+      <workItem from="1591434228422" duration="285000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="865" y="452" width="485" height="295" key="#Assign_Data_Sources" timestamp="1591353265385">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="865" y="452" width="485" height="295" key="#Assign_Data_Sources/0.0.1920.1200@0.0.1920.1200" timestamp="1591353265385" />
+    <state x="323" y="396" key="#SQL_Dialects" timestamp="1591408303734">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="323" y="396" key="#SQL_Dialects/0.0.1920.1200@0.0.1920.1200" timestamp="1591408303734" />
+    <state x="560" y="265" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590977207590">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="560" y="265" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1200@0.0.1920.1200" timestamp="1590977207590" />
+    <state x="735" y="323" key="#com.intellij.ide.util.MemberChooser" timestamp="1591190015999">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="735" y="323" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1200@0.0.1920.1200" timestamp="1591190015999" />
+    <state x="393" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1591412713185">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="393" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1200@0.0.1920.1200" timestamp="1591412713185" />
+    <state width="1878" height="458" key="GridCell.Tab.0.bottom" timestamp="1591434035886">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1878" height="458" key="GridCell.Tab.0.bottom/0.0.1920.1200@0.0.1920.1200" timestamp="1591434035886" />
+    <state width="1878" height="458" key="GridCell.Tab.0.bottom/0.23.1920.1116@0.23.1920.1116" timestamp="1591410764938" />
+    <state width="1878" height="492" key="GridCell.Tab.0.bottom/0.23.1920.1117@0.23.1920.1117" timestamp="1591314404445" />
+    <state width="1878" height="458" key="GridCell.Tab.0.center" timestamp="1591434035885">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1878" height="458" key="GridCell.Tab.0.center/0.0.1920.1200@0.0.1920.1200" timestamp="1591434035885" />
+    <state width="1878" height="458" key="GridCell.Tab.0.center/0.23.1920.1116@0.23.1920.1116" timestamp="1591410764937" />
+    <state width="1878" height="492" key="GridCell.Tab.0.center/0.23.1920.1117@0.23.1920.1117" timestamp="1591314404443" />
+    <state width="1878" height="458" key="GridCell.Tab.0.left" timestamp="1591434035884">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1878" height="458" key="GridCell.Tab.0.left/0.0.1920.1200@0.0.1920.1200" timestamp="1591434035884" />
+    <state width="1878" height="458" key="GridCell.Tab.0.left/0.23.1920.1116@0.23.1920.1116" timestamp="1591410764936" />
+    <state width="1878" height="492" key="GridCell.Tab.0.left/0.23.1920.1117@0.23.1920.1117" timestamp="1591314404443" />
+    <state width="1878" height="458" key="GridCell.Tab.0.right" timestamp="1591434035885">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1878" height="458" key="GridCell.Tab.0.right/0.0.1920.1200@0.0.1920.1200" timestamp="1591434035885" />
+    <state width="1878" height="458" key="GridCell.Tab.0.right/0.23.1920.1116@0.23.1920.1116" timestamp="1591410764938" />
+    <state width="1878" height="492" key="GridCell.Tab.0.right/0.23.1920.1117@0.23.1920.1117" timestamp="1591314404444" />
+    <state width="1878" height="458" key="GridCell.Tab.1.bottom" timestamp="1591434035889">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1878" height="458" key="GridCell.Tab.1.bottom/0.0.1920.1200@0.0.1920.1200" timestamp="1591434035889" />
+    <state width="1878" height="458" key="GridCell.Tab.1.bottom/0.23.1920.1116@0.23.1920.1116" timestamp="1591410764940" />
+    <state width="1878" height="492" key="GridCell.Tab.1.bottom/0.23.1920.1117@0.23.1920.1117" timestamp="1591314404447" />
+    <state width="1878" height="458" key="GridCell.Tab.1.center" timestamp="1591434035887">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1878" height="458" key="GridCell.Tab.1.center/0.0.1920.1200@0.0.1920.1200" timestamp="1591434035887" />
+    <state width="1878" height="458" key="GridCell.Tab.1.center/0.23.1920.1116@0.23.1920.1116" timestamp="1591410764939" />
+    <state width="1878" height="492" key="GridCell.Tab.1.center/0.23.1920.1117@0.23.1920.1117" timestamp="1591314404446" />
+    <state width="1878" height="458" key="GridCell.Tab.1.left" timestamp="1591434035887">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1878" height="458" key="GridCell.Tab.1.left/0.0.1920.1200@0.0.1920.1200" timestamp="1591434035887" />
+    <state width="1878" height="458" key="GridCell.Tab.1.left/0.23.1920.1116@0.23.1920.1116" timestamp="1591410764939" />
+    <state width="1878" height="492" key="GridCell.Tab.1.left/0.23.1920.1117@0.23.1920.1117" timestamp="1591314404446" />
+    <state width="1878" height="458" key="GridCell.Tab.1.right" timestamp="1591434035888">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state width="1878" height="458" key="GridCell.Tab.1.right/0.0.1920.1200@0.0.1920.1200" timestamp="1591434035888" />
+    <state width="1878" height="458" key="GridCell.Tab.1.right/0.23.1920.1116@0.23.1920.1116" timestamp="1591410764940" />
+    <state width="1878" height="492" key="GridCell.Tab.1.right/0.23.1920.1117@0.23.1920.1117" timestamp="1591314404447" />
+    <state x="461" y="239" key="SettingsEditor" timestamp="1590976146467">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="461" y="239" key="SettingsEditor/0.0.1920.1200@0.0.1920.1200" timestamp="1590976146467" />
+    <state x="662" y="165" width="596" height="870" key="find.popup" timestamp="1591035861730">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="662" y="165" width="596" height="870" key="find.popup/0.0.1920.1200@0.0.1920.1200" timestamp="1591035861730" />
+    <state x="328" y="177" key="new project wizard" timestamp="1590975281330">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="328" y="177" key="new project wizard/0.0.1920.1200@0.0.1920.1200" timestamp="1590975281330" />
+    <state x="786" y="401" key="refactoring.ChangeSignatureDialog" timestamp="1591137518293">
+      <screen x="0" y="0" width="1920" height="1200" />
+    </state>
+    <state x="786" y="401" key="refactoring.ChangeSignatureDialog/0.0.1920.1200@0.0.1920.1200" timestamp="1591137518293" />
+  </component>
+</project>
