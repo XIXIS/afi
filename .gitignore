@@ -1,60 +1,60 @@
 ### Billable Hours gitignores ###
-billablehours-api/HELP.md
-billablehours-api/.gradle
-billablehours-api/build/
-billablehours-api/!gradle/wrapper/gradle-wrapper.jar
-billablehours-api/!**/src/main/**
-billablehours-api/!**/src/test/**
+billablehour-api/HELP.md
+billablehour-api/.gradle
+billablehour-api/build/
+billablehour-api/!gradle/wrapper/gradle-wrapper.jar
+billablehour-api/!**/src/main/**
+billablehour-api/!**/src/test/**
 
 ### STS ###
-billablehours-api/.apt_generated
-billablehours-api/.classpath
-billablehours-api/.factorypath
-billablehours-api/.project
-billablehours-api/.settings
-billablehours-api/.springBeans
-billablehours-api/.sts4-cache
+billablehour-api/.apt_generated
+billablehour-api/.classpath
+billablehour-api/.factorypath
+billablehour-api/.project
+billablehour-api/.settings
+billablehour-api/.springBeans
+billablehour-api/.sts4-cache
 
 ### IntelliJ IDEA ###
-billablehours-api/.idea
-billablehours-api/*.iws
-billablehours-api/*.iml
-billablehours-api/*.ipr
-billablehours-api/out/
+billablehour-api/.idea
+billablehour-api/*.iws
+billablehour-api/*.iml
+billablehour-api/*.ipr
+billablehour-api/out/
 
 ### NetBeans ###
-billablehours-api/nbproject/private/
-billablehours-api/nbbuild/
-billablehours-api/dist/
-billablehours-api/nbdist/
-billablehours-api/.nb-gradle/
+billablehour-api/nbproject/private/
+billablehour-api/nbbuild/
+billablehour-api/dist/
+billablehour-api/nbdist/
+billablehour-api/.nb-gradle/
 
 ### VS Code ###
-billablehours-api/.vscode/
+billablehour-api/.vscode/
 
 
 
 ### Rewarder gitignores ###
 
 # dependencies
-billablehours-frontend/node_modules
-billablehours-frontend/.pnp
-billablehours-frontend/.pnp.js
+billablehour-frontend/node_modules
+billablehour-frontend/.pnp
+billablehour-frontend/.pnp.js
 
 # testing
-billablehours-frontend/coverage
+billablehour-frontend/coverage
 
 # production
-billablehours-frontend/build
+billablehour-frontend/build
 
 # misc
-billablehours-frontend/.DS_Store
-billablehours-frontend/.env
-billablehours-frontend/.env.local
-billablehours-frontend/.env.development.local
-billablehours-frontend/.env.test.local
-billablehours-frontend/.env.production.local
+billablehour-frontend/.DS_Store
+billablehour-frontend/.env
+billablehour-frontend/.env.local
+billablehour-frontend/.env.development.local
+billablehour-frontend/.env.test.local
+billablehour-frontend/.env.production.local
 
-billablehours-frontend/npm-debug.log*
-billablehours-frontend/yarn-debug.log*
-billablehours-frontend/yarn-error.log*
+billablehour-frontend/npm-debug.log*
+billablehour-frontend/yarn-debug.log*
+billablehour-frontend/yarn-error.log*
