@@ -45,7 +45,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -98,7 +98,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * {
      *  "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * HTTP/1.1 200 OK
@@ -138,7 +138,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * {
      * "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -171,7 +171,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * {
      * "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiParam {String} firstName first name of user
      * @apiParam {String} lastName last name of user
      * @apiParam {String} email email of user
@@ -218,7 +218,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * {
      *  "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiParam {String} firstName first name of user
      * @apiParam {String} lastName last name of user
      * @apiParam {String} email email of user
@@ -271,7 +271,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * {
      *  "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiParam {String} firstName first name of user
      * @apiParam {String} lastName last name of user
      * @apiParam {String} email email of user
@@ -309,7 +309,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * {
      *  "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0;"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiParam {String} password new user password
      * @apiParam {String} oldPassword old user password
      *
@@ -351,7 +351,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * {
      *  "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -398,7 +398,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * }
      *
      * @apiGroup Users
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      *
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
@@ -432,7 +432,7 @@ class UserController(private val userService: UserService, private val userTypeS
      * {
      *  "Authorization": "Bearer eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE1NjMyMTEwNTYsImV4cCI6MTU2MzIyOTA1Nn0"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {

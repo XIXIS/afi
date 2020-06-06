@@ -3,26 +3,19 @@ package com.afi.billablehours.controllers
 //import org.springframework.hateoas.PagedResources
 import com.afi.billablehours.config.Auditable
 import com.afi.billablehours.models.APIResponse
-import com.afi.billablehours.models.Grade
 import com.afi.billablehours.models.TimeSheet
-import com.afi.billablehours.models.requests.CreateGradeRequest
 import com.afi.billablehours.models.requests.CreateTimeSheetEntryRequest
 import com.afi.billablehours.services.TimeSheetService
 import com.afi.billablehours.services.UserService
 import com.afi.billablehours.utils.Constants
-import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_CREATION
-import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_NOT_FOUND
-import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_COMPANY
+import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_CLIENT
 import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_TIMESHEET
-import com.afi.billablehours.utils.Constants.Companion.ERROR_NON_EXISTENT_COMPANY
 import com.afi.billablehours.utils.Constants.Companion.ERROR_TIMESHEET_CREATION
 import com.afi.billablehours.utils.Constants.Companion.ERROR_TIMESHEET_NOT_FOUND
-import com.afi.billablehours.utils.Constants.Companion.SUCCESS_GRADE_CREATED
-import com.afi.billablehours.utils.Constants.Companion.SUCCESS_GRADE_DETAIL
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_TIMESHEET_CREATED
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_TIMESHEET_DETAIL
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_TIMESHEET_LIST
-import com.afi.billablehours.utils.exceptions.CompanyNotFoundException
+import com.afi.billablehours.utils.exceptions.ClientNotFoundException
 import com.afi.billablehours.validators.Validator
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -169,7 +162,7 @@ class TimeSheetController(private val userService: UserService, private val time
                         APIResponse(timeSheetService.save(timeSheet), SUCCESS_TIMESHEET_CREATED),
                         HttpStatus.OK
                 )
-            } catch (ex: CompanyNotFoundException) {
+            } catch (ex: ClientNotFoundException) {
                 ResponseEntity<Any?>(
                         APIResponse<String?>(ex.message, ERROR_TIMESHEET_CREATION),
                         HttpStatus.UNPROCESSABLE_ENTITY
@@ -186,7 +179,7 @@ class TimeSheetController(private val userService: UserService, private val time
     }
 
 
-    // update grade
+    // update timesheet entry
     /**
      * @api {put} /timesheets/:timesheetId Update timesheet
      * @apiDescription Update timesheet
@@ -227,7 +220,7 @@ class TimeSheetController(private val userService: UserService, private val time
             val timeSheet: Optional<TimeSheet?> = timeSheetService.findById(timesheetId)
             if (!timeSheet.isPresent) {
                 return ResponseEntity<Any>(
-                        APIResponse<String>(ERROR_TIMESHEET_NOT_FOUND(timesheetId), ERROR_INVALID_COMPANY),
+                        APIResponse<String>(ERROR_TIMESHEET_NOT_FOUND(timesheetId), ERROR_INVALID_CLIENT),
                         HttpStatus.NOT_FOUND
                 )
             }
@@ -237,7 +230,7 @@ class TimeSheetController(private val userService: UserService, private val time
     }
 
 
-    // find company detail
+    // find timesheet entry detail
     /**
      * @api {get} /timesheets/:timesheetId Find timesheet entry detail
      * @apiDescription Get details of a grade
@@ -247,7 +240,7 @@ class TimeSheetController(private val userService: UserService, private val time
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {

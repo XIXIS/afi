@@ -10,8 +10,8 @@ import com.afi.billablehours.services.UserService
 import com.afi.billablehours.utils.Constants
 import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_CREATION
 import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_NOT_FOUND
-import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_COMPANY
-import com.afi.billablehours.utils.Constants.Companion.ERROR_NON_EXISTENT_COMPANY
+import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_CLIENT
+import com.afi.billablehours.utils.Constants.Companion.ERROR_NON_EXISTENT_CLIENT
 import com.afi.billablehours.utils.Constants.Companion.ERROR_PERMISSION_DENIED
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_GRADES_LIST
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_GRADE_CREATED
@@ -43,7 +43,7 @@ class GradeController(private val userService: UserService, private val gradeSer
      * {
      * "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -94,7 +94,7 @@ class GradeController(private val userService: UserService, private val gradeSer
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -133,7 +133,7 @@ class GradeController(private val userService: UserService, private val gradeSer
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiParam {String} name name of company
      * @apiParam {String} rate email of company
      *
@@ -191,7 +191,7 @@ class GradeController(private val userService: UserService, private val gradeSer
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiParam {String} name name of grade
      * @apiParam {String} rate billable rate
      * @apiSuccessExample {json} Success-Response:
@@ -222,7 +222,7 @@ class GradeController(private val userService: UserService, private val gradeSer
             val grade: Optional<Grade?> = gradeService.findById(gradeId)
             if (!grade.isPresent) {
                 return ResponseEntity<Any>(
-                        APIResponse<String>(ERROR_GRADE_NOT_FOUND(gradeId), ERROR_INVALID_COMPANY),
+                        APIResponse<String>(ERROR_GRADE_NOT_FOUND(gradeId), ERROR_INVALID_CLIENT),
                         HttpStatus.NOT_FOUND
                 )
             }
@@ -232,7 +232,7 @@ class GradeController(private val userService: UserService, private val gradeSer
     }
 
 
-    // find company detail
+    // find grade detail
     /**
      * @api {get} /grade/:gradeId Find grade detail
      * @apiDescription Get details of a grade
@@ -242,7 +242,7 @@ class GradeController(private val userService: UserService, private val gradeSer
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -265,7 +265,7 @@ class GradeController(private val userService: UserService, private val gradeSer
                     HttpStatus.OK)
         }
         return ResponseEntity<Any?>(
-                APIResponse<String>(ERROR_GRADE_NOT_FOUND(gradeId), ERROR_NON_EXISTENT_COMPANY),
+                APIResponse<String>(ERROR_GRADE_NOT_FOUND(gradeId), ERROR_NON_EXISTENT_CLIENT),
                 HttpStatus.NOT_FOUND
         )
     }

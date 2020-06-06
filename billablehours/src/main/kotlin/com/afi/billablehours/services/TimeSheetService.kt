@@ -1,15 +1,15 @@
 package com.afi.billablehours.services
 
 import com.afi.billablehours.models.APIResponse
-import com.afi.billablehours.models.Company
+import com.afi.billablehours.models.Client
 import com.afi.billablehours.models.TimeSheet
 import com.afi.billablehours.models.User
 import com.afi.billablehours.models.requests.CreateTimeSheetEntryRequest
 import com.afi.billablehours.repositories.TimeSheetRepository
-import com.afi.billablehours.utils.Constants.Companion.ERROR_COMPANY_NOT_FOUND
+import com.afi.billablehours.utils.Constants.Companion.ERROR_CLIENT_NOT_FOUND
 import com.afi.billablehours.utils.Constants.Companion.ERROR_TIMESHEET_UPDATE
 import com.afi.billablehours.utils.Constants.Companion.LAWYER_USER_TYPE_NAME
-import com.afi.billablehours.utils.exceptions.CompanyNotFoundException
+import com.afi.billablehours.utils.exceptions.ClientNotFoundException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -20,7 +20,7 @@ import java.util.*
 
 @Service
 class TimeSheetService(private val userService: UserService, private val timeSheetRepository: TimeSheetRepository,
-                       private val companyService: CompanyService) : Serializable {
+                       private val clientService: ClientService) : Serializable {
 
     fun listAll(pageable: Pageable): Page<TimeSheet?> {
         val timeSheets: Page<TimeSheet?>
@@ -49,12 +49,12 @@ class TimeSheetService(private val userService: UserService, private val timeShe
 
     fun create(request: CreateTimeSheetEntryRequest): TimeSheet {
 
-        val company: Optional<Company?> = companyService.findById(request.companyId)
-        if (!company.isPresent) {
-            throw CompanyNotFoundException(ERROR_COMPANY_NOT_FOUND(request.companyId))
+        val client: Optional<Client?> = clientService.findById(request.clientId)
+        if (!client.isPresent) {
+            throw ClientNotFoundException(ERROR_CLIENT_NOT_FOUND(request.clientId))
         }
         val user: User? = userService.authUser
-        val timeSheet = TimeSheet(user, user?.grade?.rate, company.get(), request.date, request.startTime, request.endTime)
+        val timeSheet = TimeSheet(user, user?.grade?.rate, client.get(), request.date, request.startTime, request.endTime)
         return save(timeSheet)
     }
 
@@ -64,12 +64,12 @@ class TimeSheetService(private val userService: UserService, private val timeShe
 
 
     fun update(timeSheetReq: CreateTimeSheetEntryRequest, timeSheet: TimeSheet): ResponseEntity<*>? {
-        if (timeSheet.company?.id != timeSheetReq.companyId) {
-            val company: Optional<Company?> = companyService.findById(timeSheetReq.companyId)
-            if (!company.isPresent) {
-                throw CompanyNotFoundException(ERROR_COMPANY_NOT_FOUND(timeSheetReq.companyId))
+        if (timeSheet.client?.id != timeSheetReq.clientId) {
+            val client: Optional<Client?> = clientService.findById(timeSheetReq.clientId)
+            if (!client.isPresent) {
+                throw ClientNotFoundException(ERROR_CLIENT_NOT_FOUND(timeSheetReq.clientId))
             }
-            timeSheet.company = company.get()
+            timeSheet.client = client.get()
         }
         timeSheet.date = timeSheetReq.date
         timeSheet.startTime = timeSheetReq.startTime

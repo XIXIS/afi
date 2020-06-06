@@ -3,16 +3,16 @@ package com.afi.billablehours.controllers
 //import org.springframework.hateoas.PagedResources
 import com.afi.billablehours.config.Auditable
 import com.afi.billablehours.models.APIResponse
-import com.afi.billablehours.models.Company
-import com.afi.billablehours.models.requests.CreateCompanyRequest
-import com.afi.billablehours.services.CompanyService
+import com.afi.billablehours.models.Client
+import com.afi.billablehours.models.requests.CreateClientRequest
+import com.afi.billablehours.services.ClientService
 import com.afi.billablehours.services.UserService
-import com.afi.billablehours.utils.Constants.Companion.ERROR_COMPANY_NOT_FOUND
-import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_COMPANY
-import com.afi.billablehours.utils.Constants.Companion.ERROR_NON_EXISTENT_COMPANY
-import com.afi.billablehours.utils.Constants.Companion.SUCCESS_COMPANIES_LIST
+import com.afi.billablehours.utils.Constants.Companion.ERROR_CLIENT_NOT_FOUND
+import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_CLIENT
+import com.afi.billablehours.utils.Constants.Companion.ERROR_NON_EXISTENT_CLIENT
+import com.afi.billablehours.utils.Constants.Companion.SUCCESS_CLIENTS_LIST
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_COMPANY_CREATED
-import com.afi.billablehours.utils.Constants.Companion.SUCCESS_COMPANY_DETAIL
+import com.afi.billablehours.utils.Constants.Companion.SUCCESS_CLIENT_DETAIL
 import com.afi.billablehours.validators.Validator
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -28,24 +28,24 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping(value = ["api/v1"])
-class CompanyController(private val userService: UserService, private val companyService: CompanyService) : Auditable() {
+class ClientController(private val clientService: ClientService) : Auditable() {
 
     // list
     /**
-     * @api {get} /companies List companies
-     * @apiDescription List companies
-     * @apiGroup Companies
+     * @api {get} /clients List clients
+     * @apiDescription List clients
+     * @apiGroup clients
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
      * "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
      *  "_embedded": {
-     *      "companies": [
+     *      "clients": [
      *          { 'name': '', ... },
      *          { 'name': '', ... },
      *          ...
@@ -53,7 +53,7 @@ class CompanyController(private val userService: UserService, private val compan
      *  },
      *  "_links":{
      *      "first": {
-     *          "href": "http://localhost:8080/api/companies?page=0&size=2",
+     *          "href": "http://localhost:8080/api/clients?page=0&size=2",
      *      },
      *      ...
      *  },
@@ -65,26 +65,26 @@ class CompanyController(private val userService: UserService, private val compan
      *  }
      * }
      */
-    @GetMapping(value = ["/companies"])
-    fun list(pageable: Pageable, assembler: PagedResourcesAssembler<Company?>): ResponseEntity<*>? {
-        val companyPage: Page<Company?> = companyService.listAll(pageable)
-        val companyPagedResources: PagedModel<EntityModel<Company?>> = assembler.toModel(companyPage)
+    @GetMapping(value = ["/clients"])
+    fun list(pageable: Pageable, assembler: PagedResourcesAssembler<Client?>): ResponseEntity<*>? {
+        val clientPage: Page<Client?> = clientService.listAll(pageable)
+        val clientPagedResources: PagedModel<EntityModel<Client?>> = assembler.toModel(clientPage)
         return ResponseEntity<Any>(
-                companyPagedResources,
+                clientPagedResources,
                 HttpStatus.OK
         )
     }
 
     /**
-     * @api {get} /list/companies List companies non-paginated
-     * @apiDescription List companies
-     * @apiGroup Companies
+     * @api {get} /list/clients List clients non-paginated
+     * @apiDescription List clients
+     * @apiGroup clients
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
      * "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -96,28 +96,28 @@ class CompanyController(private val userService: UserService, private val compan
      *  ]
      * }
      */
-    @GetMapping(value = ["/list/companies"])
-    fun companiesList(): ResponseEntity<*>? {
-        val companies: List<Company?> = companyService.listAllByList()
+    @GetMapping(value = ["/list/clients"])
+    fun clientsList(): ResponseEntity<*>? {
+        val clients: List<Client?> = clientService.listAllByList()
         return ResponseEntity<Any>(
-                APIResponse(companies, SUCCESS_COMPANIES_LIST),
+                APIResponse(clients, SUCCESS_CLIENTS_LIST),
                 HttpStatus.OK
         )
     }
 
 
     /**
-     * @api {get} /search/companies?key= Search companies
-     * @apiDescription Search companies
-     * @apiGroup Companies
+     * @api {get} /search/clients?key= Search clients
+     * @apiDescription Search clients
+     * @apiGroup clients
      * @apiExample {curl} Example usage:
-     * curl -i /companies/search?key=MTN
+     * curl -i /clients/search?key=MTN
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
+     * @apiVersion 0.0.1
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -129,8 +129,8 @@ class CompanyController(private val userService: UserService, private val compan
      *  ]
      * }
      */
-    @GetMapping(value = ["/search/companies"])
-    fun listSearchedCompanies(@RequestParam(value = "key") key: String?): ResponseEntity<*>? {
+    @GetMapping(value = ["/search/clients"])
+    fun listSearchedClients(@RequestParam(value = "key") key: String?): ResponseEntity<*>? {
         if (key == null || key == "") {
             return ResponseEntity<Any>(
                     APIResponse<String>("No search key specified", "Search key is required"),
@@ -138,29 +138,29 @@ class CompanyController(private val userService: UserService, private val compan
             )
         }
         println("search key = $key")
-        val companies: List<Company?> = companyService.listAllSearchedByList(key)
+        val clients: List<Client?> = clientService.listAllSearchedByList(key)
         return ResponseEntity<Any?>(
-                APIResponse(companies, "Searched companies"),
+                APIResponse(clients, "Searched clients"),
                 HttpStatus.OK
         )
     }
 
 
-    //create company
+    //create client
     /**
-     * @api {post} /companies Create company
-     * @apiDescription Create company
-     * @apiGroup Companies
+     * @api {post} /clients Create client
+     * @apiDescription Create client
+     * @apiGroup clients
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
-     * @apiParam {String} name name of company
-     * @apiParam {String} email email of company
-     * @apiParam {String} phone phone of company
-     * @apiParam {String} address address of company
+     * @apiVersion 0.0.1
+     * @apiParam {String} name name of client
+     * @apiParam {String} email email of client
+     * @apiParam {String} phone phone of client
+     * @apiParam {String} address address of client
      *
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
@@ -169,7 +169,7 @@ class CompanyController(private val userService: UserService, private val compan
      *      'name': 'Some',
      *      ....
      *  },
-     * "    message": "Company successfully created"
+     * "    message": "Client successfully created"
      * }
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 422 Unprocessable Entity
@@ -178,32 +178,32 @@ class CompanyController(private val userService: UserService, private val compan
      *  "message": "Simple error message"
      * }
      */
-    @PostMapping(value = ["/companies"])
-    fun createCompany(@RequestBody @Valid request:  CreateCompanyRequest, bindingResult: BindingResult): ResponseEntity<*>? {
+    @PostMapping(value = ["/clients"])
+    fun createCompany(@RequestBody @Valid request:  CreateClientRequest, bindingResult: BindingResult): ResponseEntity<*>? {
         if (bindingResult.hasErrors()) { return Validator(bindingResult).validateWithResponse() }
-        val newCompany: Company = companyService.create(request)
+        val newClient: Client = clientService.create(request)
         return ResponseEntity<Any?>(
-                APIResponse(companyService.save(newCompany), SUCCESS_COMPANY_CREATED),
+                APIResponse(clientService.save(newClient), SUCCESS_COMPANY_CREATED),
                 HttpStatus.OK
         )
     }
 
 
-    // update company
+    // update client
     /**
-     * @api {put} /companies/:companyId Update company
-     * @apiDescription Update company
-     * @apiGroup Companies
+     * @api {put} /clients/:clientId Update client
+     * @apiDescription Update client
+     * @apiGroup clients
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
      *  "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiRob255LmFkb2FzaUBjYWxsZW5zc29sdXRpb25zLmNvbSIs"
      * }
-     * @apiVersion 0.1.0
-     * @apiParam {String} name name of company
-     * @apiParam {String} email email of company
-     * @apiParam {String} phone telephone number of company
-     * @apiParam {String} address address of company
+     * @apiVersion 0.0.1
+     * @apiParam {String} name name of client
+     * @apiParam {String} email email of client
+     * @apiParam {String} phone telephone number of client
+     * @apiParam {String} address address of client
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -211,7 +211,7 @@ class CompanyController(private val userService: UserService, private val compan
      *      'name': 'Some',
      *      ....
      *  },
-     *  "message": "Company successfully updated"
+     *  "message": "Client successfully updated"
      * }
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 422 Unprocessable Entity
@@ -220,25 +220,25 @@ class CompanyController(private val userService: UserService, private val compan
      *  "message": "Simple error message"
      * }
      */
-    @PutMapping(value = ["/companies/{companyId}"])
-    fun update(@PathVariable companyId: Long, @RequestBody @Valid editCompany: CreateCompanyRequest, bindingResult: BindingResult): ResponseEntity<*>? {
-        val optionalCompany: Optional<Company?> = companyService.findById(companyId)
-        if (!optionalCompany.isPresent) {
+    @PutMapping(value = ["/clients/{clientId}"])
+    fun update(@PathVariable clientId: Long, @RequestBody @Valid editClient: CreateClientRequest, bindingResult: BindingResult): ResponseEntity<*>? {
+        val optionalClient: Optional<Client?> = clientService.findById(clientId)
+        if (!optionalClient.isPresent) {
             return ResponseEntity<Any>(
-                    APIResponse<String>(ERROR_COMPANY_NOT_FOUND(companyId), ERROR_INVALID_COMPANY),
+                    APIResponse<String>(ERROR_CLIENT_NOT_FOUND(clientId), ERROR_INVALID_CLIENT),
                     HttpStatus.NOT_FOUND
             )
         }
         if (bindingResult.hasErrors()) return Validator(bindingResult).validateWithResponse()
-        return companyService.update(editCompany, optionalCompany.get())
+        return clientService.update(editClient, optionalClient.get())
     }
 
 
-    // find company detail
+    // find client detail
     /**
-     * @api {get} /companies/:companyId Find company detail
-     * @apiDescription Get details of a company
-     * @apiGroup Companies
+     * @api {get} /clients/:clientId Find client detail
+     * @apiDescription Get details of a client
+     * @apiGroup clients
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:
      * {
@@ -248,7 +248,7 @@ class CompanyController(private val userService: UserService, private val compan
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     *  "message": "Companies listed",
+     *  "message": "clients listed",
      *  "data": { 'name': '', ... }
      * }
      * @apiErrorExample {json} Error-Response:
@@ -258,16 +258,16 @@ class CompanyController(private val userService: UserService, private val compan
      * "message": "Simple error message"
      * }
      */
-    @GetMapping(value = ["/companies/{companyId}"])
-    fun detail(@PathVariable companyId: Long): ResponseEntity<*>? {
-        val company: Optional<Company?> = companyService.findById(companyId)
-        if (company.isPresent) {
+    @GetMapping(value = ["/clients/{clientId}"])
+    fun detail(@PathVariable clientId: Long): ResponseEntity<*>? {
+        val client: Optional<Client?> = clientService.findById(clientId)
+        if (client.isPresent) {
             return ResponseEntity<Any?>(
-                    APIResponse(company.get(), SUCCESS_COMPANY_DETAIL),
+                    APIResponse(client.get(), SUCCESS_CLIENT_DETAIL),
                     HttpStatus.OK)
         }
         return ResponseEntity<Any?>(
-                APIResponse<String>(ERROR_COMPANY_NOT_FOUND(companyId), ERROR_NON_EXISTENT_COMPANY),
+                APIResponse<String>(ERROR_CLIENT_NOT_FOUND(clientId), ERROR_NON_EXISTENT_CLIENT),
                 HttpStatus.NOT_FOUND
         )
     }

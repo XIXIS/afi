@@ -8,6 +8,6 @@ import javax.validation.constraints.NotNull
 
 
 @Validated
-data class CreateTimeSheetEntryRequest(@NotNull val companyId: Long, @NotNull val date: LocalDate,
+data class CreateTimeSheetEntryRequest(@NotNull val clientId: Long, @NotNull val date: LocalDate,
                                        @NotNull val startTime: LocalTime, @NotNull val endTime: LocalTime) : Serializable
 

@@ -14,7 +14,7 @@ CREATE TABLE `grades`
 
 ALTER TABLE `users` ADD CONSTRAINT `FK1234567890poiuytrewasdfg` FOREIGN KEY (`grade_id`) REFERENCES `grades` (`id`);
 
-CREATE TABLE `companies`
+CREATE TABLE `clients`
 (
     `id`                   bigint(20)   NOT NULL,
     `created_by`           bigint(20)   DEFAULT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `timesheets`
     `last_modified_by`     bigint(20)   DEFAULT NULL,
     `last_modified_date`   datetime     DEFAULT NULL,
     `user_id`              bigint(20)   NOT NULL,
-    `company_id`           bigint(20)  NOT NULL,
+    `client_id`           bigint(20)  NOT NULL,
     `date`                 date     NOT NULL,
     `start_time`           time NOT NULL,
     `end_time`             time NOT NULL,
@@ -47,5 +47,5 @@ CREATE TABLE `timesheets`
     `rate`                 double NOT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `FK32UzUxMiJ9JzdWIiOiRob255L3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-    CONSTRAINT `FK325a23450poi456ewasdfg1993` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`)
+    CONSTRAINT `FK325a23450poi456ewasdfg1993` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`)
 ) DEFAULT CHARSET = utf8;

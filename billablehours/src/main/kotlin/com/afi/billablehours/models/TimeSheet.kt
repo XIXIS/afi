@@ -12,9 +12,9 @@ import javax.persistence.*
 @Table(name = "timesheets")
 class TimeSheet() : Auditable() {
 
-    constructor(user: User?, rate: Double?, company: Company?, date: LocalDate?, startTime: LocalTime?, endTime: LocalTime?) : this() {
+    constructor(user: User?, rate: Double?, client: Client?, date: LocalDate?, startTime: LocalTime?, endTime: LocalTime?) : this() {
         this.user = user
-        this.company = company
+        this.client = client
         this.date = date
         this.startTime = startTime
         this.endTime = endTime
@@ -34,7 +34,7 @@ class TimeSheet() : Auditable() {
 
     @NonNull
     @OneToOne
-    var company: Company? = null
+    var client: Client? = null
 
     @NonNull
     @Column(nullable = false)

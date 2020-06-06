@@ -8,8 +8,8 @@ import javax.validation.constraints.NotEmpty
 
 @Entity
 @ToString
-@Table(name = "companies")
-class Company() : Auditable() {
+@Table(name = "clients")
+class Client() : Auditable() {
 
     constructor(name: String?, email: String?, phone: String?, address: String?): this(){
         this.name = name
