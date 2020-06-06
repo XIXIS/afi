@@ -189,7 +189,7 @@ class TimeSheetController(private val userService: UserService, private val time
     // update grade
     /**
      * @api {put} /timesheets/:timesheetId Update timesheet
-     * @apiDescription Update grade
+     * @apiDescription Update timesheet
      * @apiGroup Grades
      * @apiHeader {String} Authorization Bearer Token
      * @apiHeaderExample {String} Header-Example:

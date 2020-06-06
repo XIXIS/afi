@@ -12,6 +12,7 @@ import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_CREATION
 import com.afi.billablehours.utils.Constants.Companion.ERROR_GRADE_NOT_FOUND
 import com.afi.billablehours.utils.Constants.Companion.ERROR_INVALID_COMPANY
 import com.afi.billablehours.utils.Constants.Companion.ERROR_NON_EXISTENT_COMPANY
+import com.afi.billablehours.utils.Constants.Companion.ERROR_PERMISSION_DENIED
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_GRADES_LIST
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_GRADE_CREATED
 import com.afi.billablehours.utils.Constants.Companion.SUCCESS_GRADE_DETAIL
@@ -158,7 +159,7 @@ class GradeController(private val userService: UserService, private val gradeSer
 
         return if (!userService.isAdmin) {
             ResponseEntity<Any>(
-                    APIResponse<String>(HttpStatus.FORBIDDEN.reasonPhrase, Constants.ERROR_PERMISSION_DENIED),
+                    APIResponse<String>(HttpStatus.FORBIDDEN.reasonPhrase, ERROR_PERMISSION_DENIED),
                     HttpStatus.FORBIDDEN
             )
         } else {
