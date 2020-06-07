@@ -81,7 +81,8 @@ class UserController(private val userService: UserService, private val userTypeS
         } else {
             val userPage: Page<User?> = userService.listAll(pageable)
             val userPagedResources: PagedModel<EntityModel<User?>> = assembler.toModel(userPage)
-            return ResponseEntity<Any>(
+            println(userPagedResources)
+            ResponseEntity<Any>(
                     userPagedResources,
                     HttpStatus.OK
             )
