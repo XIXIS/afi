@@ -43,27 +43,24 @@ Both frontend and API backend have been bundled in the same project to make it e
 This represents the frontend built with ReactJs
 
 ### Prerequisite
-Application backend has already been set up
+Application backend API has already been set up
 
 ### Dependencies
 1. React 16.13.1
-2. NodeJs 
+2. NodeJs
+3. Webstorm IDE (recommended) or any other Javascript Supported IDE
+4. Yarn 1.22.4
 
-
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Setting up
+The frontend project directory already exists in the cloned repository done in the Backend API set up
+1. Open `billablehour-frontend` folder into your IDE
+2. `cd` into project directory
+3. Rename `.env.example` to `.env` and fill out the API Base url
+4. Install node dependencies by running the command below
+    ```bash
+    yarn install
+    ```
+5. Run the project in development mode using the command below
+    `yarn start`. It should run on port 3000 .
+6. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
