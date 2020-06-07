@@ -1,5 +1,4 @@
 # Question 1 - Billable Hours
------------------------------------------------
 This project consists of two main components and a supporting apidoc 
 
 - [billablehour-api](#dependencies)
@@ -12,7 +11,6 @@ This project consists of two main components and a supporting apidoc
 This represents the project backend built with Spring Boot + Kotlin
 
 ### Dependencies
---------------------------------------------
 1. Spring Boot 2.3
 2. Java 11
 3. Kotlin
@@ -22,7 +20,6 @@ This represents the project backend built with Spring Boot + Kotlin
 
 
 ### Setting up
---------------------------------------------
 Both frontend and API backend have been bundled in the same project to make it easier to set up. Follow the steps below to set up the API Backend given that you have all the dependencies.
 1. Clone the repository
     ```bash
