@@ -40,14 +40,15 @@ Both frontend and API backend have been bundled in the same project to make it e
 
 <a name="billable-frontend"></a>
 ## billable-frontend
+This represents the frontend built with ReactJs
 
-This represents the frontend built with React
-
+### Prerequisite
+Application backend has already been set up
 
 ### Dependencies
---------------------------------------------
 1. React 16.13.1
 2. NodeJs 
+
 
 ### `yarn start`
 
