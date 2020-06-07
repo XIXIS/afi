@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {bindActionCreators} from 'redux';
-import {withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import SideNav from "../../components/sidenavs/Sidenav";
 import * as actions from '../../store/actions';
@@ -15,27 +15,33 @@ class Invoices extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      preloaderDisplay: 'block',
       pageCount: this.props.pages,
-      pageNum: 1,
+      pageNum: 0,
     };
     this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
-    this.props.listUsers(1)
+    this.props.listInvoices(this.state.pageNum);
   }
 
   handlePageClick(data) {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.perPage);
     console.log(offset);
-    this.setState({pageNum: selected + 1}, () => this.props.loadUsers(this.state.pageNum));
+    this.setState({pageNum: selected + 1}, () => this.props.listInvoices(this.state.pageNum));
   };
 
   render() {
 
-    const {users} = this.props;
+    const {invoices, showPreloader, user} = this.props;
+    const btnStyle = {
+      backgroundColor: '#00d8ff',
+      width: '100',
+      borderRadius: 5,
+      textTransform: 'none',
+      fontWeight: 'bold'
+    };
 
     return (
       <div>
@@ -50,84 +56,100 @@ class Invoices extends Component {
               <div className="col s12 l9">
                 <div className="row">
                   <div className="col s12">
-                    <h5 className='white-text' style={{marginTop: 5}}>Users</h5>
+                    <h5 className='white-text' style={{marginTop: 5}}>Invoices</h5>
                   </div>
-                </div>
-              </div>
 
-              <div className="row">
-                <div className="col s12 m10">
-                  <div className="card"
-                       style={{
-                         borderRadius: 10,
-                         boxShadow: '0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12)',
-                       }}>
-                    <div className="card-content" style={{paddingTop: 30}}>
-                      <div className="row" style={{marginBottom: 0}}>
-                        <div className="col s12">
-                          <p className='body-text' style={{marginBottom: 10, fontSize: 16, fontWeight: 600}}>
-                            Users List
-                          </p>
-                          {
-                            users.data === 0 ?
-                              <div className='grey lighten-3' style={{height: 1}}/> : ''
-                          }
-                        </div>
-                        <div className="col s12">
-                          <div className='center' style={{display: this.state.preloaderDisplay}}>
-                            <PreLoader size='small'/>
+                  <div className="col s12">
+                    <div className="card"
+                         style={{
+                           borderRadius: 10,
+                           boxShadow: '0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12)',
+                         }}>
+                      <div className="card-content" style={{paddingTop: 30}}>
+                        <div className="row" style={{marginBottom: 0}}>
+                          <div className="col s12">
+                            {
+                              invoices.data === 0 ?
+                                <div className='grey lighten-3' style={{height: 1}}/> : ''
+                            }
                           </div>
-                        </div>
-                        <div className="col s12">
-                          <p>&nbsp;</p>
+                          <div className="col s12">
+                            <Link to="/app/timesheets/create">
+                              <button data-target='create'
+                                      className="btn modal-trigger waves-effect waves-light main-green white-text center"
+                                      style={btnStyle}>
+                                Create Invoice
+                              </button>
+                            </Link>
+                          </div>
                           {
-                            users.data === 0 ?
-                              <p className='body-text' style={{fontSize: 16}}>No transactions to display</p>
-                              :
-
-                              <table>
-                                <thead>
-                                <tr>
-                                  <th>Description</th>
-                                  <th className='hide-on-small-only'>Name</th>
-                                  <th className='hide-on-small-only'>Email</th>
-                                  <th className='hide-on-small-only'>Phone</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                  users.data.map(user => (
-                                    <tr key={user.id}>
-                                      <td>{user.firstName} {user.lastName}</td>
-                                      <td>{user.email}</td>
-                                      <td >{user.phone}</td>
-                                    </tr>
-                                  ))
-                                }
-                                </tbody>
-                              </table>
+                            showPreloader ?
+                              <div className="col s12">
+                                <div className='center'>
+                                  <PreLoader size='small'/>
+                                </div>
+                              </div> : ''
                           }
-                          <p>&nbsp;</p>
-                          <p>&nbsp;</p>
-                          <p>&nbsp;</p>
-                          <div className="col s12" style={{paddingLeft: 0, paddingRight: 0}}>
-                            <div className="center">
-                              <ReactPaginate
-                                previousLabel={<i className='material-icons'>chevron_left</i>}
-                                nextLabel={<i className='material-icons'>chevron_right</i>}
-                                breakLabel={<span>...</span>}
-                                breakClassName={"break-me"}
-                                pageCount={users.pages}
-                                marginPagesDisplayed={2}
-                                pageRangeDisplayed={3}
-                                onPageChange={this.handlePageClick.bind(this)}
-                                containerClassName={"pagination"}
-                                subContainerClassName={"pages pagination"}
-                                activeClassName={"active"}/>
+                          <div className="col s12">
+                            <p>&nbsp;</p>
+                            {
+                              invoices.data === 0 ?
+                                <p className='body-text' style={{fontSize: 16}}>No invoices to display</p>
+                                :
+
+                                <table>
+                                  <thead>
+                                  <tr>
+                                    <th>Client</th>
+                                    <th>Items</th>
+                                    <th>Total Cost</th>
+                                    <th className="center">Actions</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  {
+                                    invoices.data.map(invoice => (
+                                      <tr key={invoice.id}>
+                                        <td>
+                                          {invoice.client.name}<br/>
+                                          <small className="grey-text">{invoice.client.phone}</small>
+                                        </td>
+                                        <td>{invoice.timesheets.length}</td>
+                                        <td> GHS {invoice.totalCost}</td>
+                                        <td className="center">
+                                          <Link to={`/app/invoices/detail/${invoice.id}`}>
+                                            <i className="material-icons main-green-text">visibility</i>
+                                          </Link>
+                                        </td>
+
+                                      </tr>
+                                    ))
+                                  }
+                                  </tbody>
+                                </table>
+                            }
+                            <p>&nbsp;</p>
+                            <p>&nbsp;</p>
+                            <p>&nbsp;</p>
+                            <div className="col s12" style={{paddingLeft: 0, paddingRight: 0}}>
+                              <div className="center">
+                                <ReactPaginate
+                                  previousLabel={<i className='material-icons'>chevron_left</i>}
+                                  nextLabel={<i className='material-icons'>chevron_right</i>}
+                                  breakLabel={<span>...</span>}
+                                  breakClassName={"break-me"}
+                                  pageCount={invoices.pages}
+                                  marginPagesDisplayed={2}
+                                  pageRangeDisplayed={3}
+                                  onPageChange={this.handlePageClick.bind(this)}
+                                  containerClassName={"pagination"}
+                                  subContainerClassName={"pages pagination"}
+                                  activeClassName={"active"}/>
+                              </div>
+
                             </div>
 
                           </div>
-
                         </div>
                       </div>
                     </div>
@@ -139,6 +161,7 @@ class Invoices extends Component {
 
           </div>
         </div>
+
       </div>
     );
   }
@@ -148,13 +171,18 @@ class Invoices extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    listUsers: actions.listUsers
+    listInvoices: actions.listInvoices
   }, dispatch);
 }
 
-function mapStateToProps({user}) {
+function mapStateToProps({invoice, general, auth}) {
+
+  let user = auth.user;
+  if (typeof user !== "object") user = user ? JSON.parse(user) : null
   return {
-    users: user.users
+    invoices: invoice.invoices,
+    showPreloader: general.showPreloader,
+    user
   }
 }
 

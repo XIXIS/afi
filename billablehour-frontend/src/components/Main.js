@@ -15,6 +15,9 @@ import CreateClient from "./clients/Create";
 import UpdateClient from "./clients/Update";
 import UpdateTimesheet from "./timesheets/Update";
 import CreateTimesheet from "./timesheets/Create";
+import Invoices from "./invoices/List";
+import CreateInvoice from "./invoices/Create";
+import InvoiceDetail from "./invoices/Detail";
 
 class Main extends Component{
 
@@ -63,7 +66,9 @@ class Main extends Component{
           <Route path={`${match.url}/timesheets`} component={Timesheets}/>
 
 
-          <Route path={`${match.url}/invoices`} component={Dashboard}/>
+          <Route exact path={`${match.url}/invoices/create`} component={CreateInvoice}/>
+          <Route exact path={`${match.url}/invoices/detail/:invoiceId`} component={InvoiceDetail}/>
+          <Route path={`${match.url}/invoices`} component={Invoices}/>
         </Switch>
       </div>
     );

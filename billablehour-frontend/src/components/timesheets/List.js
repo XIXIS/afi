@@ -97,7 +97,7 @@ class Timesheets extends Component {
                             <p>&nbsp;</p>
                             {
                               timesheets.data === 0 ?
-                                <p className='body-text' style={{fontSize: 16}}>No transactions to display</p>
+                                <p className='body-text' style={{fontSize: 16}}>No timsheets to display</p>
                                 :
 
                                 <table>

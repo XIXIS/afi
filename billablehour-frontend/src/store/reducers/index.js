@@ -5,6 +5,7 @@ import user from './user.reducer';
 import client from './client.reducer';
 import grade from './grade.reducer';
 import timesheet from './timesheet.reducer';
+import invoice from './invoice.reducer';
 
 const createReducer = (asyncReducers) =>
   combineReducers({
@@ -14,6 +15,7 @@ const createReducer = (asyncReducers) =>
     client,
     grade,
     timesheet,
+    invoice,
     ...asyncReducers
   });
 

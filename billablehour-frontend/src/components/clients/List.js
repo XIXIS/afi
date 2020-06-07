@@ -95,7 +95,7 @@ class Clients extends Component {
                             <p>&nbsp;</p>
                             {
                               clients.data === 0 ?
-                                <p className='body-text' style={{fontSize: 16}}>No transactions to display</p>
+                                <p className='body-text' style={{fontSize: 16}}>No clients to display</p>
                                 :
 
                                 <table>
