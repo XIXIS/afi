@@ -29,7 +29,7 @@ class SideNav extends Component {
       <div style={{width: '100%'}}>
         <div className="card sidenav-grey"
              style={{borderRadius: 10, padding: '12px 40px'}}>
-          <div className='black circle valign-wrapper'
+          <div className='black circle valign-wrapper hide-on-med-and-down'
                style={{
                  width: '100%',
                  height: 220,

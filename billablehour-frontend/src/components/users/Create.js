@@ -100,9 +100,9 @@ class CreateUser extends Component {
         <div className="sidenav-grey"
              style={{zIndex: -999, height: 100, position: 'absolute', top: 60, left: 0, right: 0}}/>
         <div style={{position: 'relative'}}>
-          <div className="container" style={{width: '80%'}}>
+          <div className="container" style={{width: '90%'}}>
             <div className='row' style={{marginTop: 20}}>
-              <div className="col s12 m4 l3 hide-on-med-and-down">
+              <div className="col s12 m4 l3">
                 <SideNav/>
               </div>
               <div className="col s12 l9">
