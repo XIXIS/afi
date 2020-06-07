@@ -331,7 +331,7 @@ class UserController(private val userService: UserService, private val userTypeS
         val user: User? = userService.authUser
         if (!userService.checkIfValidOldPassword(user, changePasswordRequest.oldPassword)) {
             return ResponseEntity<Any>(
-                    APIResponse<String>(ERROR_INCORRECT_OLD_PASSWORD, ERROR_VALIDATION),
+                    APIResponse<String>(ERROR_INCORRECT_OLD_PASSWORD, ERROR_INCORRECT_OLD_PASSWORD),
                     HttpStatus.UNPROCESSABLE_ENTITY
             )
         }
@@ -416,10 +416,16 @@ class UserController(private val userService: UserService, private val userTypeS
      */
     @GetMapping(value = ["/users/my/profile"])
     fun myDetail(): ResponseEntity<*> {
-        val user: User? = userService.authUser
-        return ResponseEntity<Any?>(
-                APIResponse(user, SUCCESS_USER_DETAIL),
-                HttpStatus.OK)
+        return try {
+            val user: User? = userService.authUser
+             ResponseEntity<Any?>(
+                    APIResponse(user, SUCCESS_USER_DETAIL),
+                    HttpStatus.OK)
+        }catch (ex: Exception){
+            ResponseEntity<Any?>(
+                    APIResponse<String?>(ex.message, SUCCESS_USER_DETAIL),
+                    HttpStatus.OK)
+        }
     }
 
 

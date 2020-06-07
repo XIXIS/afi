@@ -74,7 +74,7 @@ class Invoices extends Component {
                             }
                           </div>
                           <div className="col s12">
-                            <Link to="/app/timesheets/create">
+                            <Link to="/app/invoices/create">
                               <button data-target='create'
                                       className="btn modal-trigger waves-effect waves-light main-green white-text center"
                                       style={btnStyle}>
@@ -115,7 +115,7 @@ class Invoices extends Component {
                                           <small className="grey-text">{invoice.client.phone}</small>
                                         </td>
                                         <td>{invoice.timesheets.length}</td>
-                                        <td> GHS {invoice.totalCost}</td>
+                                        <td> GHS {invoice.totalCost.toFixed(2)}</td>
                                         <td className="center">
                                           <Link to={`/app/invoices/detail/${invoice.id}`}>
                                             <i className="material-icons main-green-text">visibility</i>

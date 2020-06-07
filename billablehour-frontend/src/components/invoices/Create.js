@@ -13,17 +13,11 @@ class CreateInvoice extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageCount: this.props.pages,
-      pageNum: 0,
-      showGrade: 'none',
       validationError: ''
     };
     this.client = React.createRef();
-    this.date = React.createRef();
-    this.startTime = React.createRef();
-    this.endTime = React.createRef();
     this.errorDiv = React.createRef();
-    this.createClient = this.createClient.bind(this);
+    this.createInvoice = this.createInvoice.bind(this);
     this.hideError = this.hideError.bind(this);
   }
 
@@ -31,7 +25,7 @@ class CreateInvoice extends Component {
     this.props.listClients();
   }
 
-  createClient(e) {
+  createInvoice(e) {
     e.preventDefault();
     e.stopPropagation();
     const {history} = this.props;
@@ -42,29 +36,11 @@ class CreateInvoice extends Component {
       return;
     }
 
-    if(parseInt(this.endTime.current.value.split(":")[0]) < parseInt(this.startTime.current.value.split(":")[0])){
-      this.setState({
-        validationError: 'End time cannot be less than start time'
-      })
-      return;
-    }
-
-    // console.log(Date.now(), new Date(this.date.current.value).getTime())
-    // if(Date.now() > new Date(this.date.current.value)){
-    //   this.setState({
-    //     validationError: 'Date cannot be less than today'
-    //   })
-    //   return;
-    // }
-
-    let timesheet = {
+    let invoice = {
       clientId: this.client.current.value,
-      date: this.date.current.value,
-      startTime: `${this.startTime.current.value}:00`,
-      endTime: `${this.endTime.current.value}:00`,
     };
     // console.log(timesheet)
-    this.props.createTimesheet({...timesheet}, history)
+    this.props.createInvoice({...invoice}, history)
 
   }
 
@@ -102,7 +78,7 @@ class CreateInvoice extends Component {
               <div className="col s12 m8 l6">
                 <div className="row">
                   <div className="col s12">
-                    <h5 className='white-text' style={{marginTop: 5, marginLeft: 15}}>Create Timesheet</h5>
+                    <h5 className='white-text' style={{marginTop: 5, marginLeft: 15}}>Create Invoice</h5>
                   </div>
                 </div>
 
@@ -114,11 +90,11 @@ class CreateInvoice extends Component {
                        }}>
                     <div className="card-content" style={{paddingTop: 10, paddingRight: 30, paddingLeft: 30}}>
 
-                      <form className="row" onSubmit={this.createClient}>
+                      <form className="row" onSubmit={this.createInvoice}>
                         <div>
-                          <h4 style={{marginLeft: 10}}>Create Timesheet Entry</h4>
+                          <h4 style={{marginLeft: 10}}>Generate Invoice Summary</h4>
                           <p style={{marginLeft: 10, marginBottom: 10}}>
-                            Use the form below to create a new timesheet entry.
+                            Use the form below to generate a new invoice.
                           </p>
                           {
                             (error || validationError) &&
@@ -160,36 +136,6 @@ class CreateInvoice extends Component {
                                 </select>
 
                               </div>
-                              <div className="col s12" style={{marginBottom: 8}}>
-                                <label htmlFor="date" style={{fontSize: 16}}>Date</label>
-                                <input ref={this.date}
-                                       type="date"
-                                       required
-                                       id='date'
-                                       name='date'
-                                       className='text-field-green text-input'/>
-                              </div>
-
-                              <div className="col s12" style={{marginBottom: 8}}>
-                                <label htmlFor="start-time" style={{fontSize: 16}}>Start Time</label>
-                                <input ref={this.startTime}
-                                       type="time"
-                                       required
-                                       id='start-time'
-                                       name='start-time'
-                                       className='text-field-green text-input'/>
-                              </div>
-
-                              <div className="col s12" style={{marginBottom: 8}}>
-                                <label htmlFor="end-time" style={{fontSize: 16}}>End Time</label>
-                                <input ref={this.endTime}
-                                       type="time"
-                                       name="end-time"
-                                       required
-                                       id='end-time'
-                                       className='text-field-green text-input'/>
-                              </div>
-
                             </div>
                           </div>
 
@@ -225,7 +171,7 @@ class CreateInvoice extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createTimesheet: actions.createTimesheet,
+    createInvoice: actions.createInvoice,
     listClients: actions.listClientsByList
   }, dispatch);
 }

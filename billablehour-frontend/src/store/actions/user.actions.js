@@ -1,10 +1,12 @@
 import axios from 'axios';
-import {ERROR} from "./auth.actions";
+import {ERROR, SUCCESS} from "./auth.actions";
 
 export const SET_USER_PROFILE = 'SET_USER_PROFILE';
 export const SET_USERS_LIST = 'SET_USERS_LIST';
 export const SET_USER_TYPES_LIST = 'SET_USER_TYPES_LIST';
 export const SET_GRADES_LIST = 'SET_GRADES_LIST';
+export const PASSWORD_CHANGE_SUCCESS = 'PASSWORD_CHANGE_SUCCESS';
+export const PASSWORD_CHANGE_ERROR = 'PASSWORD_CHANGE_ERROR';
 
 
 export function profile() {
@@ -13,9 +15,13 @@ export function profile() {
     axios({
       method: 'get',
       url: `${process.env.REACT_APP_BASE_URL}/users/my/profile`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("BHAccessToken")}`,
+        'Content-Type': 'application/json'
+      },
 
     }).then(function (res) {
-      console.log(res.data);
+      // console.log(res.data);
       return dispatch({
         type: SET_USER_PROFILE,
         payload: {data: res.data.data, success: '', error: ''}
@@ -39,7 +45,7 @@ export function createUser(data, history) {
         Authorization: `Bearer ${localStorage.getItem("BHAccessToken")}`,
         'Content-Type': 'application/json'
       },
-      data: { ...data }
+      data: {...data}
 
     }).then(function (res) {
       // console.log(res);
@@ -55,8 +61,6 @@ export function createUser(data, history) {
     });
 }
 
-
-
 export function updateUser(userId, data, history) {
 
   console.log({...data});
@@ -70,7 +74,7 @@ export function updateUser(userId, data, history) {
         Authorization: `Bearer ${localStorage.getItem("BHAccessToken")}`,
         'Content-Type': 'application/json'
       },
-      data: { ...data }
+      data: {...data}
 
     }).then(function (res) {
       // console.log(res);
@@ -82,6 +86,75 @@ export function updateUser(userId, data, history) {
       return dispatch({
         type: ERROR,
         payload: err.response ? err.response.data.message : err.message
+      });
+    });
+}
+
+export function updateProfile(data) {
+
+  console.log({...data});
+  // console.log(localStorage.getItem("BHAccessToken"));
+
+  return (dispatch) => {
+
+    dispatch({
+      type: SUCCESS,
+      payload: ''
+    });
+    return (
+      axios({
+        method: 'put',
+        url: `${process.env.REACT_APP_BASE_URL}/users/my/profile`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("BHAccessToken")}`,
+          'Content-Type': 'application/json'
+        },
+        data: {...data}
+
+      }).then(function (res) {
+        // console.log(res);
+        dispatch(profile());
+        return dispatch({
+          type: SUCCESS,
+          payload: 'Profile successfully updated'
+        });
+
+      }).catch((err) => {
+        console.log(err.response ? err.response.data : err.message);
+        return dispatch({
+          type: ERROR,
+          payload: err.response ? err.response.data.message : err.message
+        });
+      })
+    )
+  }
+}
+
+export function changePassword(data) {
+
+  // console.log(localStorage.getItem("BHAccessToken"));
+
+  return (dispatch) =>
+    axios({
+      method: 'put',
+      url: `${process.env.REACT_APP_BASE_URL}/users/change/password`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("BHAccessToken")}`,
+        'Content-Type': 'application/json'
+      },
+      data: {...data}
+
+    }).then(function (res) {
+      // console.log(res);
+      return dispatch({
+        type: PASSWORD_CHANGE_SUCCESS
+      });
+
+    }).catch((err) => {
+      console.log(err.response ? err.response.data : err.message);
+      return dispatch({
+        type: PASSWORD_CHANGE_ERROR,
+        payload: {error: err.response ? err.response.data.message : err.message}
       });
     });
 }
@@ -171,8 +244,8 @@ export function listUserTypes() {
 
       let userTypesObj = {};
       res.data.data.forEach(userType => {
-          userTypesObj[userType.id] = userType.name
-        })
+        userTypesObj[userType.id] = userType.name
+      })
 
 
       return dispatch({

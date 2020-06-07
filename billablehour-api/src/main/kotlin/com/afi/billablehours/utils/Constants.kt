@@ -53,7 +53,8 @@ class Constants {
         const val ERROR_VALIDATION = "Validation Error"
         const val ERROR_INCORRECT_OLD_PASSWORD = "Incorrect old password"
         const val ERROR_DISABLE_MY_ACCOUNT = "You cannot disable your own account"
-        const val ERROR_NO_TIMESHEETS = "There are no timesheets not invoice for client"
+        const val ERROR_NO_TIMESHEETS = "All timesheets for clients has already been invoiced"
+        const val ERROR_USER_DETAIL = "Could not find user profile"
         fun  ERROR_USER_TYPE_NOT_FOUND(id: Long?): String {
           return "No User Type found for id: $id"
         }

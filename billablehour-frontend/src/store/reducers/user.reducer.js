@@ -3,6 +3,8 @@ import * as Actions from '../actions';
 const initialState = {
   error: '',
   success: '',
+  pcErrorMsg: '',
+  pcSuccessMsg: '',
   data: null,
   users: {
     pages: 0,
@@ -12,7 +14,8 @@ const initialState = {
   user: null,
   userTypes: [],
   userTypesObj: {},
-  gradesList: []
+  gradesList: [],
+  profile: null
 };
 
 const auth = function (state = initialState, action) {
@@ -21,6 +24,18 @@ const auth = function (state = initialState, action) {
       return {
         ...state,
         ...action.payload
+      };
+    }
+    case Actions.PASSWORD_CHANGE_SUCCESS: {
+      return {
+        ...state,
+        pcSuccessMsg: 'Password successfully changed'
+      };
+    }
+    case Actions.PASSWORD_CHANGE_ERROR: {
+      return {
+        ...state,
+        pcErrorMsg: action.payload.error
       };
     }
     case Actions.SET_USERS_LIST: {

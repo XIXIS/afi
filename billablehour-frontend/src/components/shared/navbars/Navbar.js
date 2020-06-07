@@ -48,12 +48,12 @@ class Navbar extends Component {
                       <i className={`waves-effect waves-green waves-circle material-icons black-text`}>menu</i>
                     </Link>
                     <Link to='/' className="brand-logo main-green-text">
-                      <img src="https://aficards.softmotions.com/afi/img/afi-footer.svg" className='left' style={{width: 120, marginTop: 5}} alt=""/>
+                      <img src="/images/afi.png" className='left' style={{width: 120, marginTop: 5}} alt=""/>
                       <span className='left hide-on-small-only'
                             style={{fontWeight: 'bold', marginLeft: 10, fontSize: '1.5rem'}}>Billable Hours</span>
                     </Link>
 
-                    <ul className="right hide-on-med-and-down">
+                    <ul className="right">
                       <li>
                         {/*eslint-disable-next-line*/}
                         <a className='black-text dropdown-trigger'
