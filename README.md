@@ -1,5 +1,5 @@
 # Question 1 - Billable Hours
-This project consists of two main components and a supporting apidoc 
+This project consists of two main components and a supporting API Documentation 
 
 - [Backend API](#billablehour-api)
 - [React Frontend](#billablehour-frontend)
