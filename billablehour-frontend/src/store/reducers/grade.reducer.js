@@ -6,6 +6,7 @@ const initialState = {
     pageNumber: 1,
     data: []
   },
+  grade: null
 };
 
 const auth = function (state = initialState, action) {
@@ -15,6 +16,13 @@ const auth = function (state = initialState, action) {
       return {
         ...state,
         grades: {...action.payload.grades}
+      };
+    }
+
+    case Actions.SET_GRADE: {
+      return {
+        ...state,
+        grade: {...action.payload.grade}
       };
     }
 

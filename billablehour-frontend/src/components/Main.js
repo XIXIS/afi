@@ -49,7 +49,7 @@ class Main extends Component{
           <Route path={`${match.url}/users`} component={Users}/>
 
           <Route exact path={`${match.url}/grades/create`} component={CreateGrade}/>
-          <Route exact path={`${match.url}/grades/update/:userId`} component={UpdateGrade}/>
+          <Route exact path={`${match.url}/grades/update/:gradeId`} component={UpdateGrade}/>
           <Route path={`${match.url}/grades`} component={Grades}/>
 
           <Route path={`${match.url}/timesheets`} component={Timesheets}/>

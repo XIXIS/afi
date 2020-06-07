@@ -77,7 +77,7 @@ class Grades extends Component {
                             }
                           </div>
                           <div className="col s12">
-                            <Link to="/app/users/create">
+                            <Link to="/app/grades/create">
                               <button data-target='create'
                                       className="btn modal-trigger waves-effect waves-light main-green white-text center"
                                       style={btnStyle}>

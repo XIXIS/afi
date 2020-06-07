@@ -18,59 +18,22 @@ class CreateGrade extends Component {
       showGrade: 'none',
       validationError: ''
     };
-    this.firstName = React.createRef();
-    this.lastName = React.createRef();
-    this.email = React.createRef();
-    this.phone = React.createRef();
-    this.userTypeId = React.createRef();
-    this.gradeId = React.createRef();
+    this.name = React.createRef();
+    this.rate = React.createRef();
     this.errorDiv = React.createRef();
-    this.createUser = this.createUser.bind(this);
-    this.showGrades = this.showGrades.bind(this);
+    this.createGrade = this.createGrade.bind(this);
     this.hideError = this.hideError.bind(this);
   }
 
-
-  showGrades() {
-    let userTypeId = this.userTypeId.current.value;
-    let {userTypesObj} = this.props;
-    this.setState({
-      showGrade: userTypesObj[userTypeId] === 'LAWYER' ? 'block' : 'none'
-    })
-  }
-
-
-  componentDidMount() {
-    this.props.listUserTypes();
-    this.props.listGrades();
-  }
-
-  createUser(e) {
+  createGrade(e) {
     e.preventDefault();
     e.stopPropagation();
-    let {userTypesObj, history} = this.props;
-    if(this.userTypeId.current.value===""){
-      this.setState({
-        validationError: 'User is Required'
-      })
-      return;
-    }
-    if(userTypesObj[this.userTypeId.current.value] === 'LAWYER' && this.gradeId.current.value===""){
-      this.setState({
-        validationError: 'Grade is required for Lawyers'
-      })
-      return
-    }
-
-    let user = {
-      firstName: this.firstName.current.value,
-      lastName: this.lastName.current.value,
-      email: this.email.current.value,
-      phone: this.phone.current.value,
-      userTypeId: this.userTypeId.current.value
+    const {history} = this.props;
+    let grade = {
+      name: this.name.current.value,
+      rate: this.rate.current.value,
     };
-    if(userTypesObj[user.userTypeId] === 'LAWYER') user.gradeId = this.gradeId.current.value
-    this.props.createUser({...user}, history)
+    this.props.createGrade({...grade}, history)
 
   }
 
@@ -83,7 +46,7 @@ class CreateGrade extends Component {
 
   render() {
 
-    const {userTypes, grades, error} = this.props;
+    const {error} = this.props;
     const {validationError} = this.state;
 
     const btnStyle = {
@@ -105,10 +68,10 @@ class CreateGrade extends Component {
               <div className="col s12 m4 l3 hide-on-med-and-down">
                 <SideNav/>
               </div>
-              <div className="col s12 l9">
+              <div className="col s12 m8 l6">
                 <div className="row">
                   <div className="col s12">
-                    <h5 className='white-text' style={{marginTop: 5, marginLeft: 15}}>Create User</h5>
+                    <h5 className='white-text' style={{marginTop: 5, marginLeft: 15}}>Create Grade</h5>
                   </div>
                 </div>
 
@@ -120,12 +83,11 @@ class CreateGrade extends Component {
                        }}>
                     <div className="card-content" style={{paddingTop: 10, paddingRight: 30, paddingLeft: 30}}>
 
-                      <form className="row" onSubmit={this.createUser}>
+                      <form className="row" onSubmit={this.createGrade}>
                         <div>
-                          <h4 style={{marginLeft: 10}}>Create User</h4>
+                          <h4 style={{marginLeft: 10}}>Create Grade</h4>
                           <p style={{marginLeft: 10, marginBottom: 10}}>
-                            Use the form below to create a new user. This system default password is&nbsp;
-                            "<strong className="red-text">password</strong>".
+                            Use the form below to create a new grade for lawyers.
                           </p>
                           {
                             (error || validationError) &&
@@ -147,38 +109,28 @@ class CreateGrade extends Component {
                               </div>
                           }
 
-                          <div className="col s12 l6">
+                          <div className="col s12">
                             <div className="row">
                               <div className="col s12" style={{marginBottom: 8}}>
-                                <label htmlFor="email" style={{fontSize: 16}}>First Name</label>
-                                <input ref={this.firstName}
+                                <label htmlFor="name" style={{fontSize: 16}}>Name</label>
+                                <input ref={this.name}
                                        type="text"
                                        required
-                                       id='first-name'
-                                       name='first-name'
-                                       placeholder='John'
+                                       id='name'
+                                       name='name'
+                                       placeholder='Grade D'
                                        className='text-field-green text-input'/>
                               </div>
 
                               <div className="col s12" style={{marginBottom: 8}}>
-                                <label htmlFor="email" style={{fontSize: 16}}>Last Name</label>
-                                <input ref={this.lastName}
-                                       type="text"
-                                       name="last-name"
+                                <label htmlFor="rate" style={{fontSize: 16}}>Rate</label>
+                                <input ref={this.rate}
+                                       type="number"
+                                       step="0.01"
+                                       name="rate"
                                        required
-                                       id='last-name'
-                                       placeholder='Doe'
-                                       className='text-field-green text-input'/>
-                              </div>
-
-                              <div className="col s12" style={{marginBottom: 8}}>
-                                <label htmlFor="email" style={{fontSize: 16}}>Email Address</label>
-                                <input ref={this.email}
-                                       type="text"
-                                       required
-                                       id='email'
-                                       name='email'
-                                       placeholder='johndoe@example.com'
+                                       id='rate'
+                                       placeholder='0.0'
                                        className='text-field-green text-input'/>
                               </div>
 
@@ -186,62 +138,6 @@ class CreateGrade extends Component {
                             </div>
                           </div>
 
-                          <div className="col s12 l6">
-                            <div className="row">
-
-                              <div className="col s12" style={{marginBottom: 8}}>
-                                <label htmlFor="email" style={{fontSize: 16}}>Phone</label>
-                                <input ref={this.phone}
-                                       type="text"
-                                       required
-                                       id='phone'
-                                       name='phone'
-                                       placeholder='02000000000'
-                                       className='text-field-green text-input'/>
-                              </div>
-
-                              <div className="col s12" style={{marginBottom: 20, paddingRight: 0}}>
-                                <span style={{fontSize: 16}} className="grey-text">User Type</span>
-                                <br/>
-                                <select ref={this.userTypeId}
-                                        id='user-type'
-                                        name='user-type'
-                                        onChange={this.showGrades}
-                                        style={{borderRadius: 5, border: '1px solid #e0e0e0', width: '97%'}}
-                                        className='text-field-green browser-default body-text'>
-                                  <option value="">Select User Type</option>
-                                  {
-                                    userTypes.map((userType) => (
-                                      <option key={userType.id} value={userType.id}>{userType.name}</option>
-                                    ))
-                                  }
-
-                                </select>
-
-                              </div>
-
-                              <div className="col s12"
-                                   style={{marginBottom: 8, paddingRight: 0, display: this.state.showGrade}}>
-                                <span style={{fontSize: 16}} className="grey-text">Grade</span>
-                                <br/>
-                                <select ref={this.gradeId}
-                                        id='user-type'
-                                        name='user-type'
-                                        style={{borderRadius: 5, border: '1px solid #e0e0e0', width: '97%'}}
-                                        className='text-field-green browser-default body-text'>
-                                  <option value="">Select Grades</option>
-                                  {
-                                    grades.map((grade) => (
-                                      <option key={grade.id} value={grade.id}>{grade.name}</option>
-                                    ))
-                                  }
-
-                                </select>
-
-                              </div>
-
-                            </div>
-                          </div>
 
                           <div className="col s12" style={{marginBottom: 8}}>
                             <a href="#!" style={{marginTop: -20, float: 'right'}}>
@@ -274,9 +170,7 @@ class CreateGrade extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createUser: actions.createUser,
-    listUserTypes: actions.listUserTypes,
-    listGrades: actions.listGrades
+    createGrade: actions.createGrade
   }, dispatch);
 }
 
