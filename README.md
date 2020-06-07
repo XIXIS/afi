@@ -38,6 +38,11 @@ Both frontend and API backend have been bundled in the same project to make it e
 5. Run the main application class
     `BillableHoursApplication.kt`
     The application automatically runs on port 8080. Ensure the port if free before running the application.
+6. Default Seeded Admin Credentials
+    ```properties
+    email=admin@billinghours.com
+    password=password
+    ```
 
 <a name="billablehour-frontend"></a>
 ## React Frontend
