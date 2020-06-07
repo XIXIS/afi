@@ -8,21 +8,22 @@ const initialState = {
     pages: 0,
     pageNumber: 1,
     data: []
-  }
+  },
+  client: null
 };
 
 const auth = function (state = initialState, action) {
   switch (action.type) {
-    case Actions.SET_USER_PROFILE: {
-      return {
-        ...state,
-        ...action.payload
-      };
-    }
     case Actions.SET_CLIENTS_LIST: {
       return {
         ...state,
         clients: {...action.payload.clients}
+      };
+    }
+    case Actions.SET_CLIENT: {
+      return {
+        ...state,
+        client: {...action.payload.client}
       };
     }
 

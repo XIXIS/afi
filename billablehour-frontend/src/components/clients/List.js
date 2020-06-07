@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {bindActionCreators} from 'redux';
-import {withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import SideNav from "../../components/sidenavs/Sidenav";
 import * as actions from '../../store/actions';
@@ -25,7 +25,6 @@ class Clients extends Component {
 
   componentDidMount() {
     this.props.listClients(this.state.pageNum);
-    M.Modal.init(this.createModal.current, {});
   }
 
   handlePageClick(data) {
@@ -78,11 +77,13 @@ class Clients extends Component {
                             }
                           </div>
                           <div className="col s12">
-                            <button data-target="create"
-                                    className="btn modal-trigger waves-effect waves-light main-green white-text center"
-                                    style={btnStyle}>
-                              Create Client
-                            </button>
+                            <Link to="/app/clients/create">
+                              <button data-target='create'
+                                      className="btn modal-trigger waves-effect waves-light main-green white-text center"
+                                      style={btnStyle}>
+                                Create Client
+                              </button>
+                            </Link>
                           </div>
                           {
                             showPreloader ?
@@ -118,7 +119,9 @@ class Clients extends Component {
                                         </td>
                                         <td>{client.address}</td>
                                         <td>
-                                          <i className="material-icons main-green-text">edit</i>
+                                          <Link to={`/app/clients/update/${client.id}`}>
+                                            <i className="material-icons main-green-text">edit</i>
+                                          </Link>
                                         </td>
                                       </tr>
                                     ))

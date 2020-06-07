@@ -11,6 +11,8 @@ import UpdateUser from "./users/Update";
 import Grades from "./grades/List";
 import CreateGrade from "./grades/Create";
 import UpdateGrade from "./grades/Update";
+import CreateClient from "./clients/Create";
+import UpdateClient from "./clients/Update";
 
 class Main extends Component{
 
@@ -42,6 +44,8 @@ class Main extends Component{
         <Switch>
           <Route path={`${match.url}/dashboard`} component={Dashboard}/>
 
+          <Route exact path={`${match.url}/clients/create`} component={CreateClient}/>
+          <Route exact path={`${match.url}/clients/update/:clientId`} component={UpdateClient}/>
           <Route path={`${match.url}/clients`} component={Clients}/>
 
           <Route exact path={`${match.url}/users/create`} component={CreateUser}/>

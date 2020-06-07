@@ -4,12 +4,9 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import SideNav from "../../components/sidenavs/Sidenav";
 import * as actions from '../../store/actions';
-import M from 'materialize-css';
 
 
 class UpdateUser extends Component {
-
-  // props.clearOverlays();
 
   constructor(props) {
     super(props);
@@ -44,6 +41,10 @@ class UpdateUser extends Component {
 
   componentDidMount() {
     // console.log(this.props.match.params.userId);
+    this.setState({
+      showGrade: 'none'
+    })
+
     this.props.userDetail(this.props.match.params.userId);
     this.props.listUserTypes();
     this.props.listGrades();
@@ -83,7 +84,7 @@ class UpdateUser extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
 
-    const {user, authUser} = this.props;
+    const {user, authUser, userTypesObj} = this.props;
     const {populated} = this.state;
     if (!populated && user) {
       this.firstName.current.value = user.firstName;
@@ -93,6 +94,17 @@ class UpdateUser extends Component {
       if (user.id !== authUser.id && this.userTypeId.current, this.gradeId.current) {
         this.userTypeId.current.value = user.userType.id;
         this.gradeId.current.value = user.grade ? user.grade.id : "";
+
+        // console.log(userTypesObj[user.userType.id] === 'LAWYER' && this.state.showGrade !== 'block')
+        if(userTypesObj[user.userType.id] === 'LAWYER' && this.state.showGrade !== 'block'){
+          this.setState({
+            showGrade: 'block'
+          })
+        }else if(userTypesObj[user.userType.id] !== 'LAWYER' && this.state.showGrade !== 'none'){
+          this.setState({
+            showGrade: 'none'
+          })
+        }
       }
       // M.FormSelect.init(document.getElementsByClassName(".select"), {})
     }
@@ -276,7 +288,7 @@ class UpdateUser extends Component {
                             <a href="#!" style={{marginTop: -20, float: 'right'}}>
                               <button type='submit'
                                       className="z-depth-0 waves-effect waves-light main-green white-text btn login-btn"
-                                      style={{...btnStyle, marginRight: 5}}> Create&nbsp;
+                                      style={{...btnStyle, marginRight: 5}}> Update&nbsp;
                               </button>
                             </a>
                           </div>
