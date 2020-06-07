@@ -1,12 +1,13 @@
 # Question 1 - Billable Hours
 This project consists of two main components and a supporting apidoc 
 
-- [billablehour-api](#dependencies)
-- [billablehour-frontend](#setting-up)
-- [apidoc](#ldap-setup)
+- [Backend API](#billablehour-api)
+- [React Frontend](#billablehour-frontend)
+- [API Documentation](#apidoc)
+- [Postman Collection](https://documenter.getpostman.com/view/2659866/SztK2kQA)
 
 <a name="billablehour-api"></a>
-## billablehour-api
+## Backend API
 
 This represents the project backend built with Spring Boot + Kotlin
 
@@ -38,8 +39,8 @@ Both frontend and API backend have been bundled in the same project to make it e
     `BillableHoursApplication.kt`
     The application automatically runs on port 8080. Ensure the port if free before running the application.
 
-<a name="billable-frontend"></a>
-## billable-frontend
+<a name="billablehour-frontend"></a>
+## React Frontend
 This represents the frontend built with ReactJs
 
 ### Prerequisite
@@ -61,6 +62,25 @@ The frontend project directory already exists in the cloned repository done in t
     yarn install
     ```
 5. Run the project in development mode using the command below
-    `yarn start`. It should run on port 3000 .
+    `yarn start`. It should run on port 3000.
 6. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+<a name="apidoc"></a>
+## API Documentation
+This represents a generated API Documentation. It was generated with [apidocjs](https://apidocjs.com)
+
+### Dependencies
+1. PHP 5.4+
+
+### Setting up
+The frontend project directory already exists in the cloned repository done in the Backend API set up
+1. `cd` into apidoc directory
+2. Execute the following commands to serve the doc via PHP's inbuilt server 
+    ```bash
+    php -S locahost:[port]
+    ```
+3. Open [http://localhost:[port]](http://localhost:8000) to view it in the browser.
+
+<a name="apidoc"></a>
+## Postman Collection
+[This](https://documenter.getpostman.com/view/2659866/SztK2kQA) is a postman collection

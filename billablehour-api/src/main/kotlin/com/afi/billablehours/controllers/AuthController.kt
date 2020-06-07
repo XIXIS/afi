@@ -29,7 +29,7 @@ import javax.validation.Valid
 @RestController
 @CrossOrigin
 @RequestMapping(value=["api/v1"])
-class JWTAuthController(private val authenticationManager: AuthenticationManager, private val userService: UserService,
+class AuthController(private val authenticationManager: AuthenticationManager, private val userService: UserService,
                         private val jWTTokenUtil: JWTTokenUtil) {
 
 

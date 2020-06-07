@@ -34,7 +34,7 @@ class Invoices extends Component {
 
   render() {
 
-    const {invoices, showPreloader, user} = this.props;
+    const {invoices, showPreloader} = this.props;
     const btnStyle = {
       backgroundColor: '#00d8ff',
       width: '100',

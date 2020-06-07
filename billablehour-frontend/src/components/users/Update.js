@@ -91,7 +91,7 @@ class UpdateUser extends Component {
       this.lastName.current.value = user.lastName;
       this.email.current.value = user.email;
       this.phone.current.value = user.phone;
-      if (user.id !== authUser.id && this.userTypeId.current, this.gradeId.current) {
+      if (user.id !== authUser.id && this.userTypeId.current && this.gradeId.current) {
         this.userTypeId.current.value = user.userType.id;
         this.gradeId.current.value = user.grade ? user.grade.id : "";
 

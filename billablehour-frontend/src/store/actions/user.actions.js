@@ -11,25 +11,36 @@ export const PASSWORD_CHANGE_ERROR = 'PASSWORD_CHANGE_ERROR';
 
 export function profile() {
 
-  return (dispatch) =>
-    axios({
-      method: 'get',
-      url: `${process.env.REACT_APP_BASE_URL}/users/my/profile`,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("BHAccessToken")}`,
-        'Content-Type': 'application/json'
-      },
-
-    }).then(function (res) {
-      // console.log(res.data);
-      return dispatch({
-        type: SET_USER_PROFILE,
-        payload: {data: res.data.data, success: '', error: ''}
-      });
-
-    }).catch((err) => {
-      console.log(err.response != null ? err.response.data : err.message);
+  return (dispatch) => {
+    dispatch({
+      type: SUCCESS,
+      payload: ''
     });
+    dispatch({
+      type: ERROR,
+      payload: ''
+    });
+    return (
+      axios({
+        method: 'get',
+        url: `${process.env.REACT_APP_BASE_URL}/users/my/profile`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("BHAccessToken")}`,
+          'Content-Type': 'application/json'
+        },
+
+      }).then(function (res) {
+        // console.log(res.data);
+        return dispatch({
+          type: SET_USER_PROFILE,
+          payload: {data: res.data.data, success: '', error: ''}
+        });
+
+      }).catch((err) => {
+        console.log(err.response != null ? err.response.data : err.message);
+      })
+    )
+  }
 }
 
 export function createUser(data, history) {

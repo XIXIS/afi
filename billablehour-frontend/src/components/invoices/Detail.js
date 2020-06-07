@@ -1,11 +1,10 @@
 import React, {Component} from "react";
 import {bindActionCreators} from 'redux';
-import {Link, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import SideNav from "../../components/sidenavs/Sidenav";
 import * as actions from '../../store/actions';
 import PreLoader from "../util/preloader";
-import ReactPaginate from "react-paginate";
 
 
 class InvoiceDetail extends Component {
@@ -56,15 +55,15 @@ class InvoiceDetail extends Component {
                           </div>
                           <div className="col s9 m10">
                             {
-                             invoice ?
-                               <p>
-                                 <strong style={{fontSize: 18}}>{ invoice.client.name}</strong>
-                                 <span><br/>{invoice.client.email}</span>
-                                 <span><br/>{invoice.client.phone}</span>
-                                 <span><br/>{invoice.client.address}</span>
+                              invoice ?
+                                <p>
+                                  <strong style={{fontSize: 18}}>{invoice.client.name}</strong>
+                                  <span><br/>{invoice.client.email}</span>
+                                  <span><br/>{invoice.client.phone}</span>
+                                  <span><br/>{invoice.client.address}</span>
 
-                               </p>:
-                               <p>No Invoice</p>
+                                </p> :
+                                <p>No Invoice</p>
                             }
 
                           </div>
@@ -80,42 +79,42 @@ class InvoiceDetail extends Component {
                             <p>&nbsp;</p>
                             {
                               invoice &&
-                                <table>
-                                  <thead className="blue white-text">
-                                  <tr>
-                                    <th>Employer</th>
-                                    <th className='hide-on-small-only'>Hours</th>
-                                    <th className='hide-on-small-only'>Unit Price</th>
-                                    <th className='hide-on-small-only'>Cost</th>
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-                                  {
-                                    invoice.timesheets.map(timesheet => (
-                                      <tr key={timesheet.id}>
-                                        <td>
-                                          {timesheet.user.firstName} {timesheet.user.lastName}<br/>
-                                          <small className="grey-text">{timesheet.client.phone}</small>
-                                        </td>
-                                        <td>
-                                          {`${parseInt(timesheet.hours.split(":")[0]) !== 0 ? parseInt(timesheet.hours.split(":")[0])+' hours' : ''}`}&nbsp;
-                                          {`${parseInt(timesheet.hours.split(":")[1]) !== 0 ? parseInt(timesheet.hours.split(":")[1])+' minutes' : ''}`}
-                                        </td>
-                                        <td>GHS {timesheet.rate}</td>
-                                        <td>GHS {timesheet.cost}</td>
-                                      </tr>
-                                    ))
-                                  }
-                                  <tr>
-                                    <td colSpan={3}>
-                                      <p style={{float: 'right', fontSize: 16, fontWeight: 'bold'}}>Total</p>
-                                    </td>
-                                    <td colSpan={1}>
-                                      <p style={{fontSize: 16}}>GHS {invoice.totalCost}</p>
-                                    </td>
-                                  </tr>
-                                  </tbody>
-                                </table>
+                              <table>
+                                <thead className="blue white-text">
+                                <tr>
+                                  <th>Employer</th>
+                                  <th className='hide-on-small-only'>Hours</th>
+                                  <th className='hide-on-small-only'>Unit Price</th>
+                                  <th className='hide-on-small-only'>Cost</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                  invoice.timesheets.map(timesheet => (
+                                    <tr key={timesheet.id}>
+                                      <td>
+                                        {timesheet.user.firstName} {timesheet.user.lastName}<br/>
+                                        <small className="grey-text">{timesheet.client.phone}</small>
+                                      </td>
+                                      <td>
+                                        {`${parseInt(timesheet.hours.split(":")[0]) !== 0 ? parseInt(timesheet.hours.split(":")[0]) + ' hours' : ''}`}&nbsp;
+                                        {`${parseInt(timesheet.hours.split(":")[1]) !== 0 ? parseInt(timesheet.hours.split(":")[1]) + ' minutes' : ''}`}
+                                      </td>
+                                      <td>GHS {timesheet.rate}</td>
+                                      <td>GHS {timesheet.cost}</td>
+                                    </tr>
+                                  ))
+                                }
+                                <tr>
+                                  <td colSpan={3}>
+                                    <p style={{float: 'right', fontSize: 16, fontWeight: 'bold'}}>Total</p>
+                                  </td>
+                                  <td colSpan={1}>
+                                    <p style={{fontSize: 16}}>GHS {invoice.totalCost}</p>
+                                  </td>
+                                </tr>
+                                </tbody>
+                              </table>
                             }
                             <p>&nbsp;</p>
                             <p>&nbsp;</p>
