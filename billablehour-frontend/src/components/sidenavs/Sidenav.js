@@ -23,7 +23,6 @@ class SideNav extends Component {
   render() {
 
     const {user, location} = this.props;
-    // console.log(location.pathname);
 
     return (
 
@@ -33,7 +32,7 @@ class SideNav extends Component {
           <div className='black circle valign-wrapper'
                style={{
                  width: '100%',
-                 height: 200,
+                 height: 220,
                  margin: '30px auto 10px',
                }}>
             <img src="/images/user-white.svg" alt=""
@@ -43,7 +42,8 @@ class SideNav extends Component {
                  }}
             />
           </div>
-          <p className='center-align white-text' style={{fontWeight: 300}}>{`${user ? `${user.firstName} ${user.lastName}` : ''}`}</p>
+          <p className='center-align white-text'
+             style={{fontWeight: 300}}>{`${user ? `${user.firstName} ${user.lastName}` : ''}`}</p>
 
           <div style={{margin: '40px auto', height: 1,}} className='grey darken-2'/>
 
@@ -55,13 +55,26 @@ class SideNav extends Component {
                 <span style={{fontWeight: 300}}>Dashboard</span>
               </Link>
             </li>
-            <li style={{height: 50}}>
-              <Link to={'/app/users'}
-                    className={`${location.pathname.includes('users') ? 'sidenav-green-text' : 'white-text'}`}>
-                <img src="/images/settings.svg" style={{width: 20, marginRight: 10}} alt="" className='left'/>
-                Users
-              </Link>
-            </li>
+            {
+              user.userType.name === "ADMIN" &&
+              <>
+                <li style={{height: 50}}>
+                  <Link to={'/app/users'}
+                        className={`${location.pathname.includes('users') ? 'sidenav-green-text' : 'white-text'}`}>
+                    <img src="/images/settings.svg" style={{width: 20, marginRight: 10}} alt="" className='left'/>
+                    Users
+                  </Link>
+                </li>
+
+                <li style={{height: 50}}>
+                  <Link to={'/app/grades'}
+                        className={`${location.pathname.includes('grades') ? 'sidenav-green-text' : 'white-text'}`}>
+                    <img src="/images/settings.svg" style={{width: 20, marginRight: 10}} alt="" className='left'/>
+                    Grades
+                  </Link>
+                </li>
+              </>
+            }
             <li style={{height: 50}}>
               <Link to={'/app/clients'}
                     className={`${location.pathname.includes('clients') ? 'sidenav-green-text' : 'white-text'}`}>
@@ -76,13 +89,16 @@ class SideNav extends Component {
                 Timesheets
               </Link>
             </li>
-            <li style={{height: 50}}>
-              <Link to={'/app/invoices'}
-                    className={`${location.pathname.includes('invoices') ? 'sidenav-green-text' : 'white-text'}`}>
-                <img src="/images/farm.svg" style={{width: 20, marginRight: 10}} alt="" className='left'/>
-                Invoices
-              </Link>
-            </li>
+            {
+              user.userType.name === "FINANCE_USER" &&
+              <li style={{height: 50}}>
+                <Link to={'/app/invoices'}
+                      className={`${location.pathname.includes('invoices') ? 'sidenav-green-text' : 'white-text'}`}>
+                  <img src="/images/farm.svg" style={{width: 20, marginRight: 10}} alt="" className='left'/>
+                  Invoices
+                </Link>
+              </li>
+            }
           </ul>
         </div>
       </div>
@@ -100,10 +116,12 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-function mapStateToProps({auth, user}) {
+function mapStateToProps({auth}) {
+
+  let user = auth.user;
+  if (typeof user !== "object") user = user ? JSON.parse(user) : null
   return {
-    isLoggedIn: auth.isLoggedIn,
-    user: user.data
+    isLoggedIn: auth.isLoggedIn, user
   }
 }
 

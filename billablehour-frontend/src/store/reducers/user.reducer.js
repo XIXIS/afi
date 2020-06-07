@@ -8,7 +8,11 @@ const initialState = {
     pages: 0,
     pageNumber: 1,
     data: []
-  }
+  },
+  user: null,
+  userTypes: [],
+  userTypesObj: {},
+  gradesList: []
 };
 
 const auth = function (state = initialState, action) {
@@ -23,6 +27,19 @@ const auth = function (state = initialState, action) {
       return {
         ...state,
         users: {...action.payload.users}
+      };
+    }
+    case Actions.SET_USER_TYPES_LIST: {
+      return {
+        ...state,
+        userTypes: [...action.payload.userTypes],
+        userTypesObj: {...action.payload.userTypesObj}
+      };
+    }
+    case Actions.SET_GRADES_LIST: {
+      return {
+        ...state,
+        gradesList: [...action.payload.grades]
       };
     }
     case Actions.REMOVE_USER_DATA: {

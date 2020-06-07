@@ -4,10 +4,9 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import SideNav from "../../components/sidenavs/Sidenav";
 import * as actions from '../../store/actions';
-import M from 'materialize-css';
 
 
-class UpdateUser extends Component {
+class UpdateGrade extends Component {
 
   // props.clearOverlays();
 
@@ -325,4 +324,4 @@ function mapStateToProps({user, general, auth}) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UpdateUser));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UpdateGrade));

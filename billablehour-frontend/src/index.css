@@ -75,10 +75,11 @@ code {
 }
 
 .text-input{
-  border-bottom: none !important;
+  /*border-bottom: none !important;*/
   border-radius: 5px !important;
   padding-left: 10px !important;
   width: 97% !important;
+  border: 1.5px solid #e0e0e0 !important;
 }
 
 textarea.text-input{

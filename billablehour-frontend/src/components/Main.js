@@ -6,6 +6,11 @@ import Users from "./users/List";
 import Clients from "./clients/List";
 import Timesheets from "./timesheets/List";
 import axios from 'axios';
+import CreateUser from "./users/Create";
+import UpdateUser from "./users/Update";
+import Grades from "./grades/List";
+import CreateGrade from "./grades/Create";
+import UpdateGrade from "./grades/Update";
 
 class Main extends Component{
 
@@ -36,8 +41,17 @@ class Main extends Component{
         <Navbar/>
         <Switch>
           <Route path={`${match.url}/dashboard`} component={Dashboard}/>
+
           <Route path={`${match.url}/clients`} component={Clients}/>
+
+          <Route exact path={`${match.url}/users/create`} component={CreateUser}/>
+          <Route exact path={`${match.url}/users/update/:userId`} component={UpdateUser}/>
           <Route path={`${match.url}/users`} component={Users}/>
+
+          <Route exact path={`${match.url}/grades/create`} component={CreateGrade}/>
+          <Route exact path={`${match.url}/grades/update/:userId`} component={UpdateGrade}/>
+          <Route path={`${match.url}/grades`} component={Grades}/>
+
           <Route path={`${match.url}/timesheets`} component={Timesheets}/>
           <Route path={`${match.url}/invoices`} component={Dashboard}/>
         </Switch>

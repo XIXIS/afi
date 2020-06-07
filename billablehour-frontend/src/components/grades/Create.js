@@ -4,10 +4,9 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import SideNav from "../../components/sidenavs/Sidenav";
 import * as actions from '../../store/actions';
-import M from 'materialize-css';
 
 
-class UpdateUser extends Component {
+class CreateGrade extends Component {
 
   // props.clearOverlays();
 
@@ -17,8 +16,7 @@ class UpdateUser extends Component {
       pageCount: this.props.pages,
       pageNum: 0,
       showGrade: 'none',
-      validationError: '',
-      populated: false
+      validationError: ''
     };
     this.firstName = React.createRef();
     this.lastName = React.createRef();
@@ -27,7 +25,7 @@ class UpdateUser extends Component {
     this.userTypeId = React.createRef();
     this.gradeId = React.createRef();
     this.errorDiv = React.createRef();
-    this.updateUser = this.updateUser.bind(this);
+    this.createUser = this.createUser.bind(this);
     this.showGrades = this.showGrades.bind(this);
     this.hideError = this.hideError.bind(this);
   }
@@ -43,60 +41,36 @@ class UpdateUser extends Component {
 
 
   componentDidMount() {
-    // console.log(this.props.match.params.userId);
-    this.props.userDetail(this.props.match.params.userId);
     this.props.listUserTypes();
     this.props.listGrades();
   }
 
-  updateUser(e) {
+  createUser(e) {
     e.preventDefault();
     e.stopPropagation();
-    let {userTypesObj, history, user, authUser} = this.props;
-
-    if (user.id !== authUser.id) {
-      if (this.userTypeId.current.value === "") {
-        this.setState({
-          validationError: 'User is Required'
-        })
-        return;
-      }
-      if (userTypesObj[this.userTypeId.current.value] === 'LAWYER' && this.gradeId.current.value === "") {
-        this.setState({
-          validationError: 'Grade is required for Lawyers'
-        })
-        return
-      }
+    let {userTypesObj, history} = this.props;
+    if(this.userTypeId.current.value===""){
+      this.setState({
+        validationError: 'User is Required'
+      })
+      return;
+    }
+    if(userTypesObj[this.userTypeId.current.value] === 'LAWYER' && this.gradeId.current.value===""){
+      this.setState({
+        validationError: 'Grade is required for Lawyers'
+      })
+      return
     }
 
-    let req = {
+    let user = {
       firstName: this.firstName.current.value,
       lastName: this.lastName.current.value,
       email: this.email.current.value,
       phone: this.phone.current.value,
-      userTypeId: user.id !== authUser.id ? this.userTypeId.current.value : user.userType.id
+      userTypeId: this.userTypeId.current.value
     };
-    if (userTypesObj[req.userTypeId] === 'LAWYER') req.gradeId = user.id !== authUser.id ? this.gradeId.current.value : user.grade.id
-    this.props.updateUser(this.props.match.params.userId, {...req}, history)
-
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-
-    const {user, authUser} = this.props;
-    const {populated} = this.state;
-    if (!populated && user) {
-      this.firstName.current.value = user.firstName;
-      this.lastName.current.value = user.lastName;
-      this.email.current.value = user.email;
-      this.phone.current.value = user.phone;
-      if (user.id !== authUser.id && this.userTypeId.current, this.gradeId.current) {
-        this.userTypeId.current.value = user.userType.id;
-        this.gradeId.current.value = user.grade ? user.grade.id : "";
-      }
-      // M.FormSelect.init(document.getElementsByClassName(".select"), {})
-    }
-
+    if(userTypesObj[user.userTypeId] === 'LAWYER') user.gradeId = this.gradeId.current.value
+    this.props.createUser({...user}, history)
 
   }
 
@@ -109,7 +83,7 @@ class UpdateUser extends Component {
 
   render() {
 
-    const {userTypes, grades, error, authUser, user} = this.props;
+    const {userTypes, grades, error} = this.props;
     const {validationError} = this.state;
 
     const btnStyle = {
@@ -119,6 +93,7 @@ class UpdateUser extends Component {
       textTransform: 'none',
       fontWeight: 'bold'
     };
+
 
     return (
       <div>
@@ -133,7 +108,7 @@ class UpdateUser extends Component {
               <div className="col s12 l9">
                 <div className="row">
                   <div className="col s12">
-                    <h5 className='white-text' style={{marginTop: 5, marginLeft: 15}}>Update User</h5>
+                    <h5 className='white-text' style={{marginTop: 5, marginLeft: 15}}>Create User</h5>
                   </div>
                 </div>
 
@@ -145,30 +120,31 @@ class UpdateUser extends Component {
                        }}>
                     <div className="card-content" style={{paddingTop: 10, paddingRight: 30, paddingLeft: 30}}>
 
-                      <form className="row" onSubmit={this.updateUser}>
+                      <form className="row" onSubmit={this.createUser}>
                         <div>
-                          <h4 style={{marginLeft: 10}}>Update User</h4>
+                          <h4 style={{marginLeft: 10}}>Create User</h4>
                           <p style={{marginLeft: 10, marginBottom: 10}}>
-                            Use the form below to update user details.
+                            Use the form below to create a new user. This system default password is&nbsp;
+                            "<strong className="red-text">password</strong>".
                           </p>
                           {
                             (error || validationError) &&
-                            <div className="col s12" ref={this.errorDiv} style={{marginBottom: 20}}>
-                              <p className='red lighten-4 white-text'
-                                 style={{
-                                   padding: '10px 20px',
-                                   borderTopRightRadius: 20,
-                                   borderBottomLeftRadius: 20
-                                 }}>
-                                <i className="material-icons left"
+                              <div className="col s12" ref={this.errorDiv} style={{marginBottom: 20}}>
+                                <p className='red lighten-4 white-text'
                                    style={{
-                                     cursor: 'pointer',
-                                     height: 50
-                                   }}
-                                   onClick={this.hideError.bind(this)}>cancel</i>
-                                <span className='red-text'>{error || validationError}</span>
-                              </p>
-                            </div>
+                                     padding: '10px 20px',
+                                     borderTopRightRadius: 20,
+                                     borderBottomLeftRadius: 20
+                                   }}>
+                                  <i className="material-icons left"
+                                     style={{
+                                       cursor: 'pointer',
+                                       height: 50
+                                     }}
+                                     onClick={this.hideError.bind(this)}>cancel</i>
+                                  <span className='red-text'>{error || validationError}</span>
+                                </p>
+                              </div>
                           }
 
                           <div className="col s12 l6">
@@ -224,51 +200,46 @@ class UpdateUser extends Component {
                                        className='text-field-green text-input'/>
                               </div>
 
-                              {
-                                (user && authUser.id !== user.id) &&
-                                <>
-                                  <div className="col s12" style={{marginBottom: 20, paddingRight: 0}}>
-                                    <span style={{fontSize: 16}} className="grey-text">User Type</span>
-                                    <br/>
-                                    <select ref={this.userTypeId}
-                                            id='user-type'
-                                            name='user-type'
-                                            onChange={this.showGrades}
-                                            style={{borderRadius: 5, border: '1px solid #e0e0e0', width: '97%'}}
-                                            className='text-field-green browser-default body-text'>
-                                      <option value="">Select User Type</option>
-                                      {
-                                        userTypes.map((userType) => (
-                                          <option key={userType.id} value={userType.id}>{userType.name}</option>
-                                        ))
-                                      }
+                              <div className="col s12" style={{marginBottom: 20, paddingRight: 0}}>
+                                <span style={{fontSize: 16}} className="grey-text">User Type</span>
+                                <br/>
+                                <select ref={this.userTypeId}
+                                        id='user-type'
+                                        name='user-type'
+                                        onChange={this.showGrades}
+                                        style={{borderRadius: 5, border: '1px solid #e0e0e0', width: '97%'}}
+                                        className='text-field-green browser-default body-text'>
+                                  <option value="">Select User Type</option>
+                                  {
+                                    userTypes.map((userType) => (
+                                      <option key={userType.id} value={userType.id}>{userType.name}</option>
+                                    ))
+                                  }
 
-                                    </select>
+                                </select>
 
-                                  </div>
+                              </div>
 
-                                  <div className="col s12"
-                                       style={{marginBottom: 8, paddingRight: 0, display: this.state.showGrade}}>
-                                    <span style={{fontSize: 16}} className="grey-text">Grade</span>
-                                    <br/>
-                                    <select ref={this.gradeId}
-                                            id='user-type'
-                                            name='user-type'
-                                            style={{borderRadius: 5, border: '1px solid #e0e0e0', width: '97%'}}
-                                            className='text-field-green browser-default body-text'>
-                                      <option value="">Select Grades</option>
-                                      {
-                                        grades.map((grade) => (
-                                          <option key={grade.id} value={grade.id}>{grade.name}</option>
-                                        ))
-                                      }
+                              <div className="col s12"
+                                   style={{marginBottom: 8, paddingRight: 0, display: this.state.showGrade}}>
+                                <span style={{fontSize: 16}} className="grey-text">Grade</span>
+                                <br/>
+                                <select ref={this.gradeId}
+                                        id='user-type'
+                                        name='user-type'
+                                        style={{borderRadius: 5, border: '1px solid #e0e0e0', width: '97%'}}
+                                        className='text-field-green browser-default body-text'>
+                                  <option value="">Select Grades</option>
+                                  {
+                                    grades.map((grade) => (
+                                      <option key={grade.id} value={grade.id}>{grade.name}</option>
+                                    ))
+                                  }
 
-                                    </select>
+                                </select>
 
-                                  </div>
+                              </div>
 
-                                </>
-                              }
                             </div>
                           </div>
 
@@ -303,26 +274,20 @@ class UpdateUser extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    updateUser: actions.updateUser,
+    createUser: actions.createUser,
     listUserTypes: actions.listUserTypes,
-    listGrades: actions.listGrades,
-    userDetail: actions.userDetail
+    listGrades: actions.listGrades
   }, dispatch);
 }
 
 function mapStateToProps({user, general, auth}) {
-  let authUser = auth.user;
-  if (typeof authUser !== "object") authUser = authUser ? JSON.parse(authUser) : null
   return {
     error: auth.error,
     userTypes: user.userTypes,
     userTypesObj: user.userTypesObj,
     grades: user.gradesList,
-    showPreloader: general.showPreloader,
-    user: user.user,
-    authUser
-
+    showPreloader: general.showPreloader
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UpdateUser));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateGrade));

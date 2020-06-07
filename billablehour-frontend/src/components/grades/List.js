@@ -8,7 +8,7 @@ import PreLoader from "../util/preloader";
 import ReactPaginate from "react-paginate";
 
 
-class Users extends Component {
+class Grades extends Component {
 
   perPage = 10;
 
@@ -23,20 +23,20 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    this.props.listUsers(this.state.pageNum);
+    this.props.listGrades(this.state.pageNum);
   }
 
   handlePageClick(data) {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.perPage);
     console.log(offset);
-    this.setState({pageNum: selected + 1}, () => this.props.loadUsers(this.state.pageNum));
+    this.setState({pageNum: selected + 1}, () => this.props.loadGrades(this.state.pageNum));
   };
 
 
   render() {
 
-    const {users, showPreloader} = this.props;
+    const {grades, showPreloader} = this.props;
     // console.log(userTypes);
     const btnStyle = {
       backgroundColor: '#00d8ff',
@@ -59,7 +59,7 @@ class Users extends Component {
               <div className="col s12 l9">
                 <div className="row">
                   <div className="col s12">
-                    <h5 className='white-text' style={{marginTop: 5,  marginLeft: 15}}>Users</h5>
+                    <h5 className='white-text' style={{marginTop: 5,  marginLeft: 15}}>Grades</h5>
                   </div>
 
                   <div className="col s12">
@@ -72,7 +72,7 @@ class Users extends Component {
                         <div className="row" style={{marginBottom: 0}}>
                           <div className="col s12">
                             {
-                              users.data === 0 ?
+                              grades.data === 0 ?
                                 <div className='grey lighten-3' style={{height: 1}}/> : ''
                             }
                           </div>
@@ -81,7 +81,7 @@ class Users extends Component {
                               <button data-target='create'
                                       className="btn modal-trigger waves-effect waves-light main-green white-text center"
                                       style={btnStyle}>
-                                Create User
+                                Create Grade
                               </button>
                             </Link>
                           </div>
@@ -96,30 +96,26 @@ class Users extends Component {
                           <div className="col s12">
                             <p>&nbsp;</p>
                             {
-                              users.data === 0 ?
-                                <p className='body-text' style={{fontSize: 16}}>No users to display</p>
+                              grades.data === 0 ?
+                                <p className='body-text' style={{fontSize: 16}}>No grades to display</p>
                                 :
 
                                 <table>
                                   <thead>
                                   <tr>
                                     <th>Name</th>
-                                    <th className='hide-on-small-only'>Email</th>
-                                    <th className='hide-on-small-only'>Phone</th>
-                                    <th className='hide-on-small-only'>User Type</th>
-                                    <th className='hide-on-small-only'>Action</th>
+                                    <th>Rate</th>
+                                    <th>Action</th>
                                   </tr>
                                   </thead>
                                   <tbody>
                                   {
-                                    users.data.map(user => (
-                                      <tr key={user.id}>
-                                        <td>{user.firstName} {user.lastName}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.phone}</td>
-                                        <td>{user.userType.name}</td>
+                                    grades.data.map(grade => (
+                                      <tr key={grade.id}>
+                                        <td>{grade.name}</td>
+                                        <td>GHS {grade.rate}</td>
                                         <td>
-                                            <Link to={`/app/users/update/${user.id}`}>
+                                            <Link to={`/app/grades/update/${grade.id}`}>
                                               <i className="material-icons main-green-text">edit</i>
                                             </Link>
                                         </td>
@@ -139,7 +135,7 @@ class Users extends Component {
                                   nextLabel={<i className='material-icons'>chevron_right</i>}
                                   breakLabel={<span>...</span>}
                                   breakClassName={"break-me"}
-                                  pageCount={users.pages}
+                                  pageCount={grades.pages}
                                   marginPagesDisplayed={2}
                                   pageRangeDisplayed={3}
                                   onPageChange={this.handlePageClick.bind(this)}
@@ -171,21 +167,17 @@ class Users extends Component {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    listUsers: actions.listUsers,
-    listUserTypes: actions.listUserTypes,
-    listGrades: actions.listGrades
+    listGrades: actions.grades
   }, dispatch);
 }
 
-function mapStateToProps({user, general, auth}) {
+function mapStateToProps({grade, general, auth}) {
 
   return {
     error: auth.error,
-    users: user.users,
-    userTypes: user.userTypes,
-    grades: user.gradesList,
+    grades: grade.grades,
     showPreloader: general.showPreloader
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Users));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Grades));
