@@ -12,7 +12,7 @@ const RestrictedRoute = ({component: Component, authToken, ...rest}) => {
     <Route
       {...rest}
       render={props =>
-        authToken
+        localStorage.getItem("BHAccessToken")
           ? <Component {...props} />
           : <Redirect
             to={{pathname: '/signin'}}
@@ -32,6 +32,7 @@ class App extends Component {
   render() {
 
     const {match, location, authToken} = this.props;
+    // console.log(location.pathname, authToken)
     if (location.pathname === '/') {
       if (!authToken) {
         return (<Redirect to={'/signin'}/>);
@@ -45,7 +46,7 @@ class App extends Component {
 
       <div>
         <Switch>
-          <RestrictedRoute path={`${match.url}app`} authToken={authToken} component={Main}/>
+          <RestrictedRoute path={`${match.url}app`} component={Main}/>
           <Route path="/signin" component={Signin}/>
           <Route component={Error404}/>
         </Switch>

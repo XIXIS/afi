@@ -70,9 +70,10 @@ class Signin extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(this.props.isLoggedIn);
+    // console.log(this.props.isLoggedIn);
     if(this.props.isLoggedIn){
-      this.props.history.push({pathname: "/app/dashboard"})
+      this.props.history.push("/app/dashboard")
+      console.log('shd push to history')
     }
   }
 

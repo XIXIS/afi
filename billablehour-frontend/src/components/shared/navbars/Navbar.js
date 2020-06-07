@@ -25,7 +25,7 @@ class Navbar extends Component {
 
   logout(){
     this.props.logout();
-    this.props.history.push({pathname: "/signin"});
+    this.props.history.push("/signin");
   }
 
 

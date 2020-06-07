@@ -25,7 +25,9 @@ const auth = function (state = initialState, action) {
     case Actions.USER_LOGGED_OUT: {
       return {
         ...initialState,
-        validSession: false
+        validSession: false,
+        isLoggedIn: false,
+        authToken: null
       };
     }
     case Actions.ERROR: {
