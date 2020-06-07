@@ -30,11 +30,11 @@ class Signin extends Component {
     if (this.email.current !== null) {
       if (!this.props.isLoggedIn) this.email.current.focus();
     }
-    console.log(this.props.history.location.from);
-    if (this.props.history.location.from !== undefined && this.props.history.location.from !== "/signin") {
-      this.props.history.push({pathname: this.props.history.location.from})
-    }
-
+    // console.log(this.props.history.location.from);
+    // if (this.props.history.location.from === undefined && this.props.history.location.from !== "/signin") {
+    //   this.props.history.push({pathname: this.props.history.location.from})
+    // }
+    //
 
   }
 

@@ -4,33 +4,26 @@ const initialState = {
   error: '',
   success: '',
   data: null,
-  clientsList: [],
-  clients: {
+  timesheets: {
     pages: 0,
     pageNumber: 1,
     data: []
   },
-  client: null
+  timesheet: null
 };
 
 const auth = function (state = initialState, action) {
   switch (action.type) {
-    case Actions.SET_CLIENTS_LIST: {
+    case Actions.SET_TIMESHEETS_LIST: {
       return {
         ...state,
-        clients: {...action.payload.clients}
+        timesheets: {...action.payload.timesheets}
       };
     }
-    case Actions.SET_CLIENTS_BY_LIST: {
+    case Actions.SET_TIMESHEET: {
       return {
         ...state,
-        clientsList: [...action.payload.clients]
-      };
-    }
-    case Actions.SET_CLIENT: {
-      return {
-        ...state,
-        client: {...action.payload.client}
+        timesheet: {...action.payload.timesheet}
       };
     }
 

@@ -13,6 +13,8 @@ import CreateGrade from "./grades/Create";
 import UpdateGrade from "./grades/Update";
 import CreateClient from "./clients/Create";
 import UpdateClient from "./clients/Update";
+import UpdateTimesheet from "./timesheets/Update";
+import CreateTimesheet from "./timesheets/Create";
 
 class Main extends Component{
 
@@ -56,7 +58,11 @@ class Main extends Component{
           <Route exact path={`${match.url}/grades/update/:gradeId`} component={UpdateGrade}/>
           <Route path={`${match.url}/grades`} component={Grades}/>
 
+          <Route exact path={`${match.url}/timesheets/create`} component={CreateTimesheet}/>
+          <Route exact path={`${match.url}/timesheets/update/:timesheetId`} component={UpdateTimesheet}/>
           <Route path={`${match.url}/timesheets`} component={Timesheets}/>
+
+
           <Route path={`${match.url}/invoices`} component={Dashboard}/>
         </Switch>
       </div>

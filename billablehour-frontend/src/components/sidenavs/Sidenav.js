@@ -83,7 +83,7 @@ class SideNav extends Component {
               </Link>
             </li>
             <li style={{height: 50}}>
-              <Link to={'/app/wallet'}
+              <Link to={'/app/timesheets'}
                     className={`${location.pathname.includes('timesheets') ? 'sidenav-green-text' : 'white-text'}`}>
                 <img src="/images/menu-wallet.svg" style={{width: 20, marginRight: 10}} alt="" className='left'/>
                 Timesheets

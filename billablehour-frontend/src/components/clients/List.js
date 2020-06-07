@@ -6,7 +6,6 @@ import SideNav from "../../components/sidenavs/Sidenav";
 import * as actions from '../../store/actions';
 import PreLoader from "../util/preloader";
 import ReactPaginate from "react-paginate";
-import M from 'materialize-css';
 
 
 class Clients extends Component {
@@ -20,7 +19,6 @@ class Clients extends Component {
       pageNum: 0,
     };
     this.handlePageClick = this.handlePageClick.bind(this);
-    this.createModal = React.createRef();
   }
 
   componentDidMount() {
@@ -163,15 +161,6 @@ class Clients extends Component {
           </div>
         </div>
 
-        <div id="create" className="modal" ref={this.createModal}>
-          <div className="modal-content">
-            <h4>Modal Header</h4>
-            <p>A bunch of text</p>
-          </div>
-          <div className="modal-footer">
-            <a href="#!" className="modal-close waves-effect waves-green btn-flat">Agree</a>
-          </div>
-        </div>
       </div>
     );
   }
